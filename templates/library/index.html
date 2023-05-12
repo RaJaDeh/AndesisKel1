@@ -24,12 +24,33 @@
 
 }
 .col-lg-6{
-  padding-left: 20%;
+  padding-left: 10%;
 }
 .jumbotron{
   margin-bottom: 0px;
 }
+.custom-button {
+      background-color: #72FACA;
+      color: black;
+      border-color: black;
+    }
 
+.center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+.button-container {
+      max-width: 500px;
+      width: 100%;
+    }
+.logo {
+      max-width: 100px;
+      margin-bottom: 20px;
+    }
 </style>
 </head>
 <body>
@@ -39,7 +60,7 @@
 
 {% include "library/navbar.html" %}
 
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -64,33 +85,49 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
+</div> -->
 
 
-<div class="jumbotron">
-  <h1 style="text-align:center" class="display-4">Perpustakaan online</h1>
+<div class="center-container">
   
-  <hr class="my-4">
+  <img src="{% static "images/AdminIcon.png" %}" alt="Logo" class="logo">
+  <h2>PerpusLink</h2>
+  <div class="button-container">
+    
+    <!-- <hr class="my-4"> -->
 
-  <div class="row">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <button class="btn btn-danger btn-m btn-block custom-button">Anggota</button>
+      </li>
+      <li class="list-group-item">
+        <button class="btn btn-danger btn-m btn-block custom-button">Pengunjung</button>
+      </li>
+      <li class="list-group-item">
+        <button class="btn btn-danger btn-m btn-block custom-button">Pustakawan</button>
+      </li>
+    </ul>
+
+  <!-- <div class="list-group">
 
     <div class="col-lg-6">
-      <img src="{% static "images/AdminIcon.png" %}" width="50%"  alt=""><br><br>
-        <a class="btn btn-danger btn-lg" style="text-align:center; border-radius:0px;" href="/adminclick" role="button">Pustakawan Panel</a>
+      <img src="{% static "images/AdminIcon.png" %}" width="10%"  alt=""><br><br>
+        <a class="btn btn-danger btn-lg" style="text-align:center; border-radius:0px;" href="/adminclick" role="button">Pustakawan</a>
 
     </div>
 
     <div class="col-lg-6">
-      <img src="{% static "images/student.png" %}" width="50%"  alt=""><br><br>
-      <a class="btn btn-danger btn-lg" style="border-radius:0px;" href="/studentclick" role="button">Member Panel</a>
+      <img src="{% static "images/student.png" %}" width="10%"  alt=""><br><br>
+      <a class="btn btn-danger btn-lg" style="text-align:center; border-radius:0px;" href="/studentclick" role="button">Pengunjung</a>
     </div>
 
     <div class="col-lg-6">
-      <img src="{% static "images/student.png" %}" width="50%"  alt=""><br><br>
-      <a class="btn btn-danger btn-lg" style="border-radius:0px;" href="/studentclick" role="button">Member Panel</a>
+      <img src="{% static "images/student.png" %}" width="10%"  alt=""><br><br>
+      <a class="btn btn-danger btn-lg" style="border-radius:0px;" href="/studentclick" role="button">Anggota</a>
     </div>
+  </div> -->
   </div>
-<hr class="my-4">
+<!-- <hr class="my-4"> -->
 
 </div>
 
