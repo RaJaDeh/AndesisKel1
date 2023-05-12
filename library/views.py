@@ -103,6 +103,10 @@ def viewbook_view(request):
     books=models.Book.objects.all()
     return render(request,'library/viewbook.html',{'books':books})
 
+def guestview_view(request):
+    books=models.Book.objects.all()
+    return render(request,'library/guestview.html',{'books':books})
+
 
 
 
