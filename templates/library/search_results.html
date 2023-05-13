@@ -60,18 +60,19 @@ border-radius: 5px;
     {% include "library/navbar.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Available Book in Library</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Search Results</h3>
     <div class="d-flex justify-content-center">
         <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search by title" aria-label="Search">
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
       <br>
     
-{% if books%}
+{% block content %}
+  {% if results %}
 <div class="container">
-    
+  {% for book in results %}
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
     <tr>
@@ -89,6 +90,19 @@ border-radius: 5px;
     </tr>
     </tfoot>
     <tbody>
+      
+        <td>{{ book.name }}</td>
+        <td>{{book.isbn}}</td>
+        <td>{{book.author}}</td>
+        <td>{{book.category}}</td>  <!-- Adjust this based on the fields you want to display -->
+      
+        {% endfor %}
+    
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+{% endblock %}
+<!--       
       {% for book in books %}
         <tr>
           <td>{{book.name}}</td>
@@ -96,13 +110,11 @@ border-radius: 5px;
           <td>{{book.author}}</td>
           <td>{{book.category}}</td>
         </tr>
-      {% endfor %}
+      {% endfor %} -->
     </tbody>
     </table>
 </div>
-{%else%}
-<h1>Have 0 book</h1>
-{%endif%}
+
 
 
 <br><br><br><br><br><br><br><br><br>

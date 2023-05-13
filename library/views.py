@@ -204,12 +204,16 @@ def contactus_view(request):
             return render(request, 'library/contactussuccess.html')
     return render(request, 'library/contactus.html', {'form':sub})
 
+def perform_search(query):
+    # Perform the search query using the Book model
+    results = models.Book.objects.filter(name__icontains=query)
+    return results
+
 def search_results(request):
     query = request.GET.get('query')  # Retrieve the search query from the GET parameters
-    # Perform the search logic based on the query
-    # ...
-    # Pass the search results to the template
+    results = perform_search(query)  # Perform the search logic and get the search results
     context = {
-        'results': search_results,  # Replace `search_results` with your actual search results
+        'query': query,
+        'results': results,
     }
-    return render(request, 'search_results.html', context)
+    return render(request, 'library/search_results.html', context)
