@@ -14,120 +14,74 @@
 
 
 <style type="text/css">
-    .bs-example{
-        margin: 0px;
+      .bs-example{
+          margin: 0px;
 
-    }
-.navbar-brand{
-  font-size: 20px;
-  font-family: sans-serif;
+      }
+  .navbar-brand{
+    font-size: 20px;
+    font-family: sans-serif;
 
-}
-.col-lg-6{
-  padding-left: 10%;
-}
-.jumbotron{
-  margin-bottom: 0px;
-}
-.custom-button {
-      background-color: #72FACA;
-      color: black;
-      border-color: black;
-    }
+  }
+  .col-lg-6{
+    padding-left: 10%;
+  }
+  .jumbotron{
+    margin-bottom: 0px;
+  }
 
-.center-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-    }
+  .custom-button {
+        background-color: #72FACA !important;
+        color: black !important;
+        border-color: black !important;
+      }
 
-.button-container {
-      max-width: 500px;
-      width: 100%;
-    }
-.logo {
-      max-width: 100px;
-      margin-bottom: 20px;
-    }
+  .custom-button:hover {
+        background-color: grey !important;
+        color: black !important;
+        border-color: black !important;
+  }
+
+  .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+  .button-container {
+        max-width: 500px;
+        width: 100%;
+      }
+  .logo {
+        max-width: 100px;
+        margin-bottom: 20px;
+      }
 </style>
 </head>
 <body>
 
-
-
-
 {% include "library/navbar.html" %}
-
-<!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100 " height="500px" src="{% static "images/librarybg.jpg" %}" alt="First slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100 " height="500px" src="{% static "images/librarybg.jpg" %}" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100 " height="500px" src="{% static "images/librarybg.jpg" %}" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div> -->
-
 
 <div class="center-container">
   
   <img src="{% static "images/logoPL.png" %}" alt="Logo" class="logo">
   <h1>PerpusLink</h1>
   <div class="button-container">
-    
-    <!-- <hr class="my-4"> -->
-
+       
     <ul class="list-group">
-      <li class="list-group-item">
-        <a class="btn btn-primary btn-m btn-block custom-button" href="/guestview">Cari Katalog</a>
+      <li class="list-group-item ">
+        <a class="btn custom-button  btn-m btn-block " href="/guestview">Cari Katalog</a>
       </li>
       <li class="list-group-item">
-        <a class="btn btn-primary btn-m btn-block custom-button" href="/studentsignup">Register</a>
+        <a class="btn  custom-button btn-m btn-block custom-button" href="/studentsignup">Register</a>
       </li>
       <li class="list-group-item">
-        <a class="btn btn-primary btn-m btn-block custom-button" href="/studentlogin">Login</a>
+        <a class="btn  btn-m btn-block custom-button" href="/studentlogin">Login</a>
       </li>
     </ul>
-
-  <!-- <div class="list-group">
-
-    <div class="col-lg-6">
-      <img src="{% static "images/AdminIcon.png" %}" width="10%"  alt=""><br><br>
-        <a class="btn btn-danger btn-lg" style="text-align:center; border-radius:0px;" href="/adminclick" role="button">Pustakawan</a>
-
-    </div>
-
-    <div class="col-lg-6">
-      <img src="{% static "images/student.png" %}" width="10%"  alt=""><br><br>
-      <a class="btn btn-danger btn-lg" style="text-align:center; border-radius:0px;" href="/studentclick" role="button">Pengunjung</a>
-    </div>
-
-    <div class="col-lg-6">
-      <img src="{% static "images/student.png" %}" width="10%"  alt=""><br><br>
-      <a class="btn btn-danger btn-lg" style="border-radius:0px;" href="/studentclick" role="button">Anggota</a>
-    </div>
-  </div> -->
   </div>
-<!-- <hr class="my-4"> -->
 
 </div>
 

@@ -29,6 +29,7 @@ urlpatterns = [
     path('adminclick', views.adminclick_view),
     path('studentclick', views.studentclick_view),
 
+    path('search/', views.search_results, name='search_results'),
 
     path('adminsignup', views.adminsignup_view),
     path('studentsignup', views.studentsignup_view),

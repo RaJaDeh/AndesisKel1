@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style media="screen">
 table.redTable {
 border: 2px solid #607d8b;
@@ -59,8 +61,17 @@ border-radius: 5px;
     <br>
     <br>
     <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Available Book in Library</h3>
+    <div class="d-flex justify-content-center">
+        <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <br>
+    
 {% if books%}
 <div class="container">
+    
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
     <tr>

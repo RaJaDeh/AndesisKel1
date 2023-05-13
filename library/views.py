@@ -203,3 +203,13 @@ def contactus_view(request):
             send_mail(str(name)+' || '+str(email),message, EMAIL_HOST_USER, ['wapka1503@gmail.com'], fail_silently = False)
             return render(request, 'library/contactussuccess.html')
     return render(request, 'library/contactus.html', {'form':sub})
+
+def search_results(request):
+    query = request.GET.get('query')  # Retrieve the search query from the GET parameters
+    # Perform the search logic based on the query
+    # ...
+    # Pass the search results to the template
+    context = {
+        'results': search_results,  # Replace `search_results` with your actual search results
+    }
+    return render(request, 'search_results.html', context)
