@@ -83,6 +83,12 @@ border-radius: 5px;
     <tr>
     <th></th>
     <th></th>
+      <th>Nama buku</th>
+      <th>ISBN</th>
+      <th>Penerbit</th>
+      <th>Kategori</th>
+      <th>Jumlah buku</th>
+      <th>lokasi_buku</th>
     </tr>
     </thead>
     <tfoot>
@@ -105,6 +111,12 @@ border-radius: 5px;
               <li>Kategori:      {{book.category}}</li>
             </ul>
           </td>
+          <td>{{book.name}}</td>
+          <td>{{book.isbn}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.category}}</td>
+          <td>{{book.jumlah_buku}}</td>
+          <td>{{book.lokasi_buku}}</td>
         </tr>
       {% endfor %}
     </tbody>
