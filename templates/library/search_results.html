@@ -76,10 +76,12 @@ border-radius: 5px;
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
     <tr>
-    <th>Nama buku</th>
-    <th>ISBN</th>
-    <th>Penerbit</th>
-    <th>Kategori</th>
+      <th>Nama buku</th>
+      <th>ISBN</th>
+      <th>Penerbit</th>
+      <th>Kategori</th>
+      <th>jumlah_buku</th>
+      <th>lokasi_buku</th>
     </tr>
     </thead>
     <tfoot>
@@ -91,10 +93,12 @@ border-radius: 5px;
     </tfoot>
     <tbody>
       
-        <td>{{ book.name }}</td>
-        <td>{{book.isbn}}</td>
-        <td>{{book.author}}</td>
-        <td>{{book.category}}</td>  <!-- Adjust this based on the fields you want to display -->
+      <td>{{ book.name }}</td>
+      <td>{{book.isbn}}</td>
+      <td>{{book.author}}</td>
+      <td>{{book.category}}</td>  <!-- Adjust this based on the fields you want to display -->
+      <td>{{book.jumlah_buku}}</td>
+      <td>{{book.lokasi_buku}}</td>  <!-- Adjust this based on the fields you want to display -->
       
         {% endfor %}
     

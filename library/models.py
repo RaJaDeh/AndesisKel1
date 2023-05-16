@@ -30,10 +30,19 @@ class Book(models.Model):
         ('romance', 'Romance'),
         ('scifi','Sci-Fi')
         ]
+    catchoice2= [
+        ('RAK A', 'RAK A'),
+        ('RAK B', 'RAK B'),
+        ('RAK C', 'RAK C'),
+        ('RAK D', 'RAK D'),
+        ('RAK E', 'RAK E')
+        ]
     name=models.CharField(max_length=30)
     isbn=models.PositiveIntegerField()
     author=models.CharField(max_length=40)
     category=models.CharField(max_length=30,choices=catchoice,default='education')
+    jumlah_buku=models.PositiveIntegerField(default=0)
+    lokasi_buku = models.CharField(max_length=30,choices=catchoice2,default='RAK A')
     def __str__(self):
         return str(self.name)+"["+str(self.isbn)+']'
 
