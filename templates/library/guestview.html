@@ -77,51 +77,42 @@ border-radius: 5px;
     
 {% if books%}
 <div class="container">
-    
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
-    <tr>
-    <th></th>
-    <th></th>
-      <th>Nama buku</th>
-      <th>ISBN</th>
-      <th>Penerbit</th>
-      <th>Kategori</th>
-      <th>Jumlah buku</th>
-      <th>lokasi_buku</th>
-    </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
     </thead>
     <tfoot>
-    <tr>
-    <td colspan="2" rowspan="2">
-    <div class="links"></div>
-    </td>
-    </tr>
+      <tr>
+        <td colspan="2" rowspan="2">
+          <div class="links"></div>
+        </td>
+      </tr>
     </tfoot>
     <tbody>
       {% for book in books %}
-        
-        <tr>
-          <td>FOTO</td>
-          <td>
-            <ul class="list-unstyled">
-              <li><strong>{{book.name}}</strong></li> 
-              <li>Paul:          {{book.isbn}}</li> 
-              <li>Penulis:       {{book.author}}</li>
-              <li>Kategori:      {{book.category}}</li>
-            </ul>
-          </td>
-          <td>{{book.name}}</td>
-          <td>{{book.isbn}}</td>
-          <td>{{book.author}}</td>
-          <td>{{book.category}}</td>
-          <td>{{book.jumlah_buku}}</td>
-          <td>{{book.lokasi_buku}}</td>
-        </tr>
+      <tr>
+        <td>FOTO</td>
+        <td>
+          <ul class="list-unstyled">
+            <li class="list-group-item">
+              <a href="{% url 'book_details' book.isbn %}"><strong>{{ book.name }}</strong></a>
+            </li>
+            <li><strong>Paul:</strong> {{ book.isbn }}</li>
+            <li><strong>Penulis:</strong> {{ book.author }}</li>
+            <li><strong>Kategori:</strong> {{ book.category }}</li>
+            <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
+            <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>
+          </ul>
+        </td>
+      </tr>
       {% endfor %}
     </tbody>
-    </table>
+  </table>
 </div>
+
 {%else%}
 <h1>Have 0 book</h1>
 {%endif%}

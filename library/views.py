@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
@@ -217,3 +217,7 @@ def search_results(request):
         'results': results,
     }
     return render(request, 'library/search_results.html', context)
+
+def book_details(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+    return render(request, 'library/book_details.html', {'book': book})
