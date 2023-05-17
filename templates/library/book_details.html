@@ -62,15 +62,17 @@ border-radius: 5px;
     {% include "library/navbar.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Available Book in Library</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Detail Buku</h3>
       <br>
     
       {% block content %}
       <div class="container">
+        <div class="col-12 text-center">
           <h1>Book Details</h1>
+        </div>
           <div class="card">
               <div class="card-body">
-                  <h5 class="card-title"><strong>{{ book.name }}</strong></h5>
+                  <h5 class="card-title text-center"><strong>{{ book.name }}</strong></h5>
                   <p class="card-text">Author: {{ book.author }}</p>
                   <p class="card-text">ISBN: {{ book.isbn }}</p>
                   <p class="card-text">Kategori: {{ book.category }}</p>
