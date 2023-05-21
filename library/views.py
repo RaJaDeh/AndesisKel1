@@ -1,4 +1,4 @@
-from django.shortcuts import render,  get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
@@ -111,6 +111,30 @@ def studentview_view(request):
     books=models.Book.objects.all()
     return render(request,'library/guestview.html',{'books':books})
 
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def update_book_view(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+    form = forms.BookForm(request.POST or None, instance=book)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('view_book')
+
+    return render(request, 'library/update_book.html', {'form': form})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_book_view(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+
+    if request.method == 'POST':
+        book.delete()
+        return redirect('view_book')
+
+    return render(request, 'library/delete_book.html', {'book': book})
+
 
 
 
@@ -209,13 +233,13 @@ def contactus_view(request):
     return render(request, 'library/contactus.html', {'form':sub})
 
 def perform_search(query):
-    # Perform the search query using the Book model
+   
     results = models.Book.objects.filter(name__icontains=query)
     return results
 
 def search_results(request):
-    query = request.GET.get('query')  # Retrieve the search query from the GET parameters
-    results = perform_search(query)  # Perform the search logic and get the search results
+    query = request.GET.get('query') 
+    results = perform_search(query)  
     context = {
         'query': query,
         'results': results,

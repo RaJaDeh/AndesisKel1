@@ -88,6 +88,10 @@ border-radius: 5px;
           <td>{{book.category}}</td>
           <td>{{book.jumlah_buku}}</td>
           <td>{{book.lokasi_buku}}</td>
+          <td>
+            <a href="{% url 'update_book' book.isbn %}" class="btn btn-primary btn-sm">Update</a>
+            <a href="{% url 'delete_book' book.isbn %}" class="btn btn-danger btn-sm">Delete</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
