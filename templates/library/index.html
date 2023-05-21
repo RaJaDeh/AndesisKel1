@@ -1,85 +1,39 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Perpustakaan onlen</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<style type="text/css">
-      .bs-example{
-          margin: 0px;
-
-      }
-  .navbar-brand{
-    font-size: 20px;
-    font-family: sans-serif;
-
-  }
-  .col-lg-6{
-    padding-left: 10%;
-  }
-  .custom-button {
-        background-color: #72FACA !important;
-        color: black !important;
-        border-color: black !important;
-      }
-
-  .custom-button:hover {
-        background-color: grey !important;
-        color: black !important;
-        border-color: black !important;
-  }
-
-  .center-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 100vh;
-      }
-
-  .button-container {
-        max-width: 500px;
-        width: 100%;
-      }
-  .logo {
-        max-width: 100px;
-        margin-bottom: 20px;
-      }
-</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pustakawan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-{% include "library/navbar.html" %}
-
-<div class="center-container">
-  
-  <img src="{% static "images/logoPL.png" %}" alt="Logo" class="logo">
-  <h1>PerpusLink</h1>
-  <div class="button-container">
-       
-    <ul class="list-group">
-      <li class="list-group-item ">
-        <a class="btn custom-button  btn-m btn-block " href="/guestview">Cari Katalog</a>
-      </li>
-      <li class="list-group-item">
-        <a class="btn  custom-button btn-m btn-block custom-button" href="/studentsignup">Register</a>
-      </li>
-      <li class="list-group-item">
-        <a class="btn  btn-m btn-block custom-button" href="/studentlogin">Login</a>
-      </li>
-    </ul>
-  </div>
-
-</div>
-
-{% include "library/footer.html" %}
-
+    <div class="contatas">
+        <div class = "perpuslink">
+            <h1>Perpuslink</h1>
+        </div>
+        <div class="logo">
+            <img src="img/Group 13.svg" alt="logo">
+        </div>
+    </div>
+    <div class="container">
+        <div class="login">
+            <form action="">
+                <h2>Login Pustakawan</h2>
+                <label for="">Nomor Pustakawan</label>
+                <input type="text"
+                placeholder="Nomor Pustakawan">
+                <label for="">Password</label>
+                <input type="password"
+                placeholder="Password">
+                <button>Login</button>
+                <p>
+                    <a href="#">Lupa Password</a>
+                </p>
+                <p>Daftar Menjadi Pustakawan</p>
+                <button>Daftar</button>
+            </form>
+        </div>
+    </div> 
 </body>
 </html>

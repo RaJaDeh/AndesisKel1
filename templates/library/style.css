@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Mulish;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #ffff;
+}
+
+.contatas {
+    width: 100%;
+    display: flex;
+    max-width: 350px;
+    max-height: fit-content;
+    background: #ffff;
+    margin-bottom: 410px;
+    flex-direction: row;
+    align-items: right;
+}
+.logo {
+    width: 400px;
+    text-align: center;
+    margin-left: -100%;
+    margin-bottom: 30%;
+}
+img {
+    width: 110px;
+    height: 100%;
+    margin-right: 50px;
+    margin-bottom: 190px;
+}
+.perpuslink {
+    margin-left: 145%;
+    margin-right: 20px;
+    margin-top: 10%;
+    margin-bottom: 0;
+}
+h1 {
+    font-size: 40px;
+    font-weight: bolder;
+}
+.container {
+    width: 100%;
+    display: flex;
+    margin-right: 300px;
+    max-width: 350px;
+    max-height: fit-content;
+    background: #72FACA;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+.login {
+    width: 400px; 
+}
+form {
+    width: 250px;
+    margin: 30px auto;
+}
+h2 {
+    margin: 0;
+    text-align: center;
+    font-weight: bolder;
+    padding-bottom: 20px;
+}
+p{
+    text-align: right;
+    margin: 10px;
+    padding-bottom: 8px;
+}
+form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 30;
+    padding: 2px;
+}
+input {
+    width: 100%;
+    margin: 3px;
+    border: 0.5px solid #DDDD;
+    outline: none;
+    padding: 10px;
+    border-radius: 15px;
+}
+button {
+    border: none;
+    outline: none;
+    padding: 10px;
+    width: 252px;
+    color: #000;
+    font-size: 14px;
+    font-weight: bolder;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 12.67px;
+    background: #6FBADD;
+    opacity: 75%;
+}
+button:hover {
+    background: #6E9AE6;
+    border: 1px solid #008a61;
+    border-radius: 33.813px;
+}
