@@ -79,20 +79,26 @@ border-radius: 5px;
                   <p class="card-text">Jumlah Buku: {{ book.jumlah_buku }}</p>
                   <p class="card-text">Lokasi: {{ book.lokasi_buku }}</p>
                   <!-- Add more book details here -->
-              </div>
-          </div>
+                  <br>
+                  
+                  <div class="col-12 text-center">
+                    <h1>Delete Book</h1>
+                    <p>Are you sure you want to delete the book "{{ book.name }}"?</p>
+                    <form method="POST" action="{% url 'delete_book' book.isbn %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a href="{% url 'view_book' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+              </div>  
+        </div>
+        
+
+      {% endblock %}
       </div>
 
       
-  <h1>Delete Book</h1>
-  <p>Are you sure you want to delete the book "{{ book.name }}"?</p>
-  <form method="POST" action="{% url 'delete_book' book.isbn %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'view_book' %}" class="btn btn-secondary">Cancel</a>
-  </form>
-
-      {% endblock %}
+  
 
 
 <br><br><br><br><br><br><br><br><br>

@@ -64,6 +64,10 @@ border-radius: 5px;
     background-color: #2DC194;
     
   }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
+}
 
 </style>
 
@@ -115,6 +119,9 @@ border-radius: 5px;
             <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
             <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>
           </ul>
+        </td>
+        <td class="fit-to-button">
+          <a href="{% url 'book_details' book.isbn %}" class="btn btn-primary btn-content">Details</a>
         </td>
       </tr>
       {% endfor %}
