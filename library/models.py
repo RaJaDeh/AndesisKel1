@@ -49,6 +49,10 @@ class Book(models.Model):
 
 def get_expiry():
     return datetime.today() + timedelta(days=15)
+
+def getnow():
+    return datetime.today()
+
 class IssuedBook(models.Model):
     #moved this in forms.py
     #enrollment=[(student.enrollment,str(student.get_name)+' ['+str(student.enrollment)+']') for student in StudentExtra.objects.all()]
@@ -59,3 +63,29 @@ class IssuedBook(models.Model):
     expirydate=models.DateField(default=get_expiry)
     def __str__(self):
         return self.enrollment
+
+class Pengembalian(models.Model):
+    #moved this in forms.py
+    #enrollment=[(student.enrollment,str(student.get_name)+' ['+str(student.enrollment)+']') for student in StudentExtra.objects.all()]
+    enrollment=models.CharField(max_length=30)
+    #isbn=[(str(book.isbn),book.name+' ['+str(book.isbn)+']') for book in Book.objects.all()]
+    isbn=models.CharField(max_length=30)
+    pengembaliandate=models.DateField(default=getnow)
+    def __str__(self):
+        return self.enrollment
+    
+class RequestModel(models.Model):
+    namapeminjam = models.CharField(max_length=30)
+    isbn = models.CharField(max_length=30)
+    issuedate = models.DateField(default=getnow)
+    expirydate = models.DateField(default=get_expiry)
+    
+    def __str__(self):
+        return self.namapeminjam
+    
+    def save(self, *args, **kwargs):
+        if not self.namapeminjam:  # Hanya mengisi jika belum terisi
+            student = StudentExtra.objects.get(user=self.user)
+            self.namapeminjam = student.get_name()
+        super().save(*args, **kwargs)
+

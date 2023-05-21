@@ -40,8 +40,14 @@ urlpatterns = [
     path('logout', LogoutView.as_view(template_name='library/index.html')),
     path('afterlogin', views.afterlogin_view),
 
+    path('books/<int:book_id>/', views.book_details, name='book_details'),
+
     path('addbook', views.addbook_view),
     path('viewbook', views.viewbook_view),
+    path('viewbookstudent', views.viewbookstudent_view),
+    path('request', views.request_view),
+    path('requestsuccess',views.requestsuccess_view),
+    path('pengembalian',views.pengembalian_view),
     path('guestview', views.guestview_view),
     path('issuebook', views.issuebook_view),
     path('viewissuedbook', views.viewissuedbook_view),

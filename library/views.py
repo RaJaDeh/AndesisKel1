@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,  get_object_or_404
 from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
@@ -44,9 +44,6 @@ def adminsignup_view(request):
 
             return HttpResponseRedirect('adminlogin')
     return render(request,'library/adminsignup.html',{'form':form})
-
-
-
 
 
 
@@ -103,11 +100,10 @@ def viewbook_view(request):
     books=models.Book.objects.all()
     return render(request,'library/viewbook.html',{'books':books})
 
+
 def guestview_view(request):
     books=models.Book.objects.all()
     return render(request,'library/guestview.html',{'books':books})
-
-
 
 
 @login_required(login_url='adminlogin')
@@ -124,6 +120,19 @@ def issuebook_view(request):
             obj.save()
             return render(request,'library/bookissued.html')
     return render(request,'library/issuebook.html',{'form':form})
+
+def pengembalian_view(request):
+    form=forms.PengembalianForm()
+    if request.method=='POST':
+        #now this form have data from html
+        form=forms.PengembalianForm(request.POST)
+        if form.is_valid():
+            obj=models.Pengembalian()
+            obj.enrollment=request.POST.get('enrollment2')
+            obj.isbn=request.POST.get('isbn2')
+            obj.save()
+            return render(request,'library/bookissued.html')
+    return render(request,'library/pengembalian.html',{'form':form})
 
 
 @login_required(login_url='adminlogin')
@@ -162,6 +171,37 @@ def viewstudent_view(request):
 
 
 @login_required(login_url='studentlogin')
+def viewbookstudent_view(request):
+    books=models.Book.objects.all()
+    return render(request,'library/viewbookstudent.html',{'books':books})
+
+def request_view(request):
+    form=forms.RequestForm()
+    if request.method=='POST':
+        form=forms.RequestForm(request.POST)
+        if form.is_valid():
+            obj=models.RequestModel()
+            obj.namapeminjam=request.POST.get('nama')
+            obj.isbn=request.POST.get('isbn')
+            obj.issuedate=request.POST.get('issuedate')
+            obj.expirydate=request.POST.get('expirydate')
+            obj.save()
+            return render(request,'library/requestsuccess.html')
+    return render(request,'library/request.html',{'form':form})
+
+def requestsuccess_view(request):
+    form=forms.IssuedBookForm()
+    if request.method=='POST':
+        #now this form have data from html
+        form=forms.IssuedBookForm(request.POST)
+        if form.is_valid():
+            obj=models.IssuedBook()
+            obj.enrollment=request.POST.get('enrollment2')
+            obj.isbn=request.POST.get('isbn2')
+            obj.save()
+            return render(request,'library/bookissued.html')
+    return render(request,'library/issuebook.html',{'form':form})
+
 def viewissuedbookbystudent(request):
     student=models.StudentExtra.objects.filter(user_id=request.user.id)
     issuedbook=models.IssuedBook.objects.filter(enrollment=student[0].enrollment)
@@ -217,3 +257,7 @@ def search_results(request):
         'results': results,
     }
     return render(request, 'library/search_results.html', context)
+
+def book_details(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+    return render(request, 'library/book_details.html', {'book': book})
