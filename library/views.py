@@ -78,11 +78,11 @@ def is_admin(user):
     return user.groups.filter(name='ADMIN').exists()
 
 def afterlogin_view(request):
+    books = models.Book.objects.all()
     if is_admin(request.user):
-        return render(request,'library/adminafterlogin.html')
+        return render(request, 'library/adminafterlogin.html', {'books': books})
     else:
-        return render(request,'library/studentafterlogin.html')
-
+        return render(request, 'library/studentafterlogin.html', {'books': books})
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -104,6 +104,10 @@ def viewbook_view(request):
     return render(request,'library/viewbook.html',{'books':books})
 
 def guestview_view(request):
+    books=models.Book.objects.all()
+    return render(request,'library/guestview.html',{'books':books})
+
+def studentview_view(request):
     books=models.Book.objects.all()
     return render(request,'library/guestview.html',{'books':books})
 
@@ -221,3 +225,12 @@ def search_results(request):
 def book_details(request, book_id):
     book = get_object_or_404(models.Book, isbn=book_id)
     return render(request, 'library/book_details.html', {'book': book})
+
+def borrow_book(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+
+    # if request.method == 'POST':
+    #     borrower_name = request.POST.get('borrower_name')
+    #     # Implement the borrowing logic here
+
+    return render(request, 'library/borrow_book.html', {'book': book})

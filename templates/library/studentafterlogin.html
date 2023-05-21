@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style media="screen">
 .btn-circle.btn-xl {
   width: 70px;
@@ -28,6 +30,20 @@
 .jumbotron h1{
   text-align: center;
 }
+.my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+
+.my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
+}
 
 
 </style>
@@ -41,13 +57,65 @@
     <h1 class="display-4">Hallo {{user.first_name}} !</h1>
     <p class="lead">
     </p>
-    <hr class="my-4">
-    <p>Opsi yang tersedia</p>
-    <div class="options" style="text-align:center">
-      <a href="viewissuedbookbystudent" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">View issued book to you</a><br><br>
-        </div>
 
     </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search by title" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <br>
+    
+{% if books%}
+<div class="container">
+  <div class="row justify-content-center">
+  <table class="table table-bordered table-co" style="width: 70%;">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td colspan="3" rowspan="3">
+          <div class="links"></div>
+        </td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for book in books %}
+      <tr class="my-table-row">
+        <td>FOTO</td>
+        <td>
+          <ul class="list-unstyled">
+            <li>
+              <a href="{% url 'book_details' book.isbn %}" style="color: grey"><strong>{{ book.name }}</strong></a>
+            </li>
+            <br>
+            <li><strong>ISBN:</strong> {{ book.isbn }}</li>
+            <li><strong>Penulis:</strong> {{ book.author }}</li>
+            <li><strong>Kategori:</strong> {{ book.category }}</li>
+            <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
+            <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>  
+          </ul>
+        </td>
+        <td  class="fit-to-button">
+          <a href="{% url 'borrow_book' book.isbn %}" class="btn btn-success btn-content">Borrow</a>
+          <a href="{% url 'book_details' book.isbn %}" class="btn btn-primary btn-content">Details</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+{%else%}
+<h1>Have 0 book</h1>
+{%endif%}
 
 
     {% include "library/footer.html" %}

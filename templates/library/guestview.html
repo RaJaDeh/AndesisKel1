@@ -55,6 +55,18 @@ padding: 2px 8px;
 border-radius: 5px;
 }
 
+.my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+  .my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+
+</style>
+
 </style>
   </head>
   <body>
@@ -73,7 +85,7 @@ border-radius: 5px;
 {% if books%}
 <div class="container">
   <div class="row justify-content-center">
-  <table class="table table-hover table-condensed" style="width: 50%;">
+  <table class="table table-bordered" style="width: 70%;">
     <thead>
       <tr>
         <th></th>
@@ -89,7 +101,7 @@ border-radius: 5px;
     </tfoot>
     <tbody>
       {% for book in books %}
-      <tr>
+      <tr class ='my-table-row'>
         <td>FOTO</td>
         <td>
           <ul class="list-unstyled">
@@ -116,7 +128,7 @@ border-radius: 5px;
 {%endif%}
 
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
     {% include "library/footer.html" %}
   </body>
 </html>
