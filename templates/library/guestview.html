@@ -54,6 +54,23 @@ color: #607d8b;
 padding: 2px 8px;
 border-radius: 5px;
 }
+
+.my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+  .my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
+}
+
+</style>
+
 </style>
   </head>
   <body>
@@ -71,45 +88,54 @@ border-radius: 5px;
     
 {% if books%}
 <div class="container">
-    
-  <table class="table table-hover table-condensed table-striped table-bordered">
+  <div class="row justify-content-center">
+  <table class="table table-bordered" style="width: 70%;">
     <thead>
-    <tr>
-      <th>Nama buku</th>
-      <th>ISBN</th>
-      <th>Penerbit</th>
-      <th>Kategori</th>
-      <th>Jumlah buku</th>
-      <th>lokasi_buku</th>
-    </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
     </thead>
     <tfoot>
-    <tr>
-    <td colspan="4" rowspan="4">
-    <div class="links"></div>
-    </td>
-    </tr>
+      <tr>
+        <td colspan="2" rowspan="2">
+          <div class="links"></div>
+        </td>
+      </tr>
     </tfoot>
     <tbody>
       {% for book in books %}
-        <tr>
-          <td>{{book.name}}</td>
-          <td>{{book.isbn}}</td>
-          <td>{{book.author}}</td>
-          <td>{{book.category}}</td>
-          <td>{{book.jumlah_buku}}</td>
-          <td>{{book.lokasi_buku}}</td>
-        </tr>
+      <tr class ='my-table-row'>
+        <td>FOTO</td>
+        <td>
+          <ul class="list-unstyled">
+            <li>
+              <a href="{% url 'book_details' book.isbn %}" style="color: grey"><strong>{{ book.name }}</strong></a>
+            </li>
+            <br>
+            <li><strong>ISBN:</strong> {{ book.isbn }}</li>
+            <li><strong>Penulis:</strong> {{ book.author }}</li>
+            <li><strong>Kategori:</strong> {{ book.category }}</li>
+            <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
+            <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>
+          </ul>
+        </td>
+        <td class="fit-to-button">
+          <a href="{% url 'book_details' book.isbn %}" class="btn btn-primary btn-content">Details</a>
+        </td>
+      </tr>
       {% endfor %}
     </tbody>
-    </table>
+  </table>
+  </div>
 </div>
+
 {%else%}
 <h1>Have 0 book</h1>
 {%endif%}
 
 
-<br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
     {% include "library/footer.html" %}
   </body>
 </html>
