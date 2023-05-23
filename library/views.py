@@ -217,3 +217,7 @@ def search_results(request):
         'results': results,
     }
     return render(request, 'library/search_results.html', context)
+
+
+def view_peminjaman(request):
+    return render(request,'library/pengajuan_peminjaman.html')

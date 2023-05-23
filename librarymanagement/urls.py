@@ -50,5 +50,11 @@ urlpatterns = [
 
     path('aboutus', views.aboutus_view),
     path('contactus', views.contactus_view),
+    
+    path('pengajuan_peminjaman', views.view_peminjaman)
+
+
+
+    
 
 ]

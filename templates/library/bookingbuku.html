@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulir Peminjaman Buku</title>
+  <style>
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .form-container h2 {
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .form-group input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Formulir Peminjaman Buku</h2>
+    <form id="booking-form" action="#" method="POST">
+      <div class="form-group">
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" name="isbn" required>
+      </div>
+      <div class="form-group">
+        <label for="jumlah">Jumlah Peminjaman:</label>
+        <input type="number" id="jumlah" name="jumlah" min="1" required>
+      </div>
+      <div class="form-group">
+        <label for="tanggal">Tanggal Pengembalian:</label>
+        <input type="date" id="tanggal" name="tanggal" required>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Ajukan Peminjaman">
+      </div>
+    </form>
+  </div>
+</body>
+</html>
