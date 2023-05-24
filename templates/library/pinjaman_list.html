@@ -34,9 +34,22 @@
             <td>{{ peminjaman.date_issued }}</td>
             <td>{{ peminjaman.date_due }}</td>
             <td>{{ peminjaman.status}}</td>
-            {% if peminjaman.status == "dipinjam" %}
-            <td><button>Kembalikan</button></td>
-            {% endif %}
+            
+            <td>
+                {% if peminjaman.status == "dipinjam" %}
+                <button>Kembalikan</button>
+                {% endif %}
+                {% if peminjaman.status != 'Canceled' %}
+                <form action="{% url 'peminjaman_list' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
+                </form>
+              {% endif %}
+            
+            
+            </td>
+            
             
         </tr>
         {% endfor %}

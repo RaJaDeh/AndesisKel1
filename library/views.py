@@ -285,6 +285,13 @@ def borrow_book(request, book_id):
 
 @login_required
 def daftar_peminjaman(request):
+    if request.method == 'POST':
+        peminjaman_id = request.POST.get('peminjaman_id')
+        peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+        peminjaman.status = 'Canceled'
+        peminjaman.save()
+        return redirect('peminjaman_list')
+    
     student_extra = StudentExtra.objects.get(user=request.user)
     peminjaman_list = BookLoan.objects.filter(student=student_extra)
     return render(request, 'library/pinjaman_list.html', {'peminjaman_list': peminjaman_list})
