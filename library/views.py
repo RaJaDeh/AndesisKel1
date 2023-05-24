@@ -250,11 +250,59 @@ def book_details(request, book_id):
     book = get_object_or_404(models.Book, isbn=book_id)
     return render(request, 'library/book_details.html', {'book': book})
 
-def borrow_book(request, book_id):
-    book = get_object_or_404(models.Book, isbn=book_id)
+def booking_view(request):
+    return render(request, 'library/bookingbuku.html')
 
-    # if request.method == 'POST':
-    #     borrower_name = request.POST.get('borrower_name')
-    #     # Implement the borrowing logic here
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from datetime import date, timedelta
+from .models import Book, StudentExtra, BookLoan, Notification
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from datetime import date, timedelta
+from .models import Book, StudentExtra, BookLoan
+
+def borrow_book(request, book_id):
+    book = get_object_or_404(Book, isbn=book_id)
+    student = get_object_or_404(StudentExtra, user=request.user)
+
+    if request.method == 'GET':
+        # Mendapatkan tanggal jatuh tempo pengembalian (7 hari setelah tanggal peminjaman)
+        due_date = date.today() + timedelta(days=7)
+        
+        # Membuat objek peminjaman buku dengan status 'menunggu konfirmasi peminjaman'
+        book_loan = BookLoan(student=student, book=book, date_due=due_date, status='menunggu konfirmasi peminjaman')
+        book_loan.save()
+
+        # Mengurangi jumlah buku yang tersedia
+        book.jumlah_buku -= 1
+        book.save()
+
+        return HttpResponseRedirect('/')
 
     return render(request, 'library/borrow_book.html', {'book': book})
+
+@login_required
+def daftar_peminjaman(request):
+    student_extra = StudentExtra.objects.get(user=request.user)
+    peminjaman_list = BookLoan.objects.filter(student=student_extra)
+    return render(request, 'library/pinjaman_list.html', {'peminjaman_list': peminjaman_list})
+
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+
+def custom_admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('admin:index')
+        else:
+            error_message = 'Invalid username or password.'
+            return render(request, 'customadmin/login.html', {'error_message': error_message})
+    return render(request, 'customadmin/login.html')
