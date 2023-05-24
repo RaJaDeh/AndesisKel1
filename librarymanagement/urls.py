@@ -61,6 +61,7 @@ urlpatterns = [
 
     path('bookingbuku', views.booking_view),
     path('pinjaman_list', views.daftar_peminjaman, name='peminjaman_list'),
+    path('riwayat_peminjaman', views.riwayat_peminjaman, name='riwayat_peminjaman'),
     path('customadmin/', admin_site.urls),
     path('customadmin/login/', custom_admin_login, name='custom_admin_login'),
 ]

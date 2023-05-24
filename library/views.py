@@ -290,6 +290,12 @@ def daftar_peminjaman(request):
     peminjaman_list = BookLoan.objects.filter(student=student_extra)
     return render(request, 'library/pinjaman_list.html', {'peminjaman_list': peminjaman_list})
 
+@login_required
+def riwayat_peminjaman(request):
+    student_extra = StudentExtra.objects.get(user=request.user)
+    peminjaman_list = BookLoan.objects.filter(student=student_extra)
+    return render(request, 'library/riwayat_peminjaman.html', {'peminjaman_list': peminjaman_list})
+
 
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect

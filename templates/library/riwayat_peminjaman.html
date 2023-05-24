@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Peminjaman Buku</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include "library/navbarstudent.html" %}
+    <br><br><br>
+    <div class="container">
+        <h1 style="text-align: center;">Daftar Peminjaman Buku</h1>
+        <table class="table">
+            <tbody>
+                {% if peminjaman_list %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Member</th>
+            <th>Nama Buku</th>
+            <th>Tanggal Peminjaman</th>
+            <th>Tanggal Jatuh Tempo</th>
+            <th>Status Peminjaman</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for peminjaman in peminjaman_list %}
+            {% if peminjaman.status == "dikembalikan" %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ peminjaman.student }}</td>
+            <td>{{ peminjaman.book.name }}</td>
+            <td>{{ peminjaman.date_issued }}</td>
+            <td>{{ peminjaman.date_due }}</td>
+            <td>{{ peminjaman.status}}</td>
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Anda belum melakukan peminjaman buku.</p>
+{% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
