@@ -62,45 +62,42 @@
     <br>
     <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;margin-bottom:0px;'>Issued books to Student</h3>
 
-{% if li%}
     <div class="container">
-      <table class="table table-hover table-condensed table-striped table-bordered">
+      <table class="table">
         <thead>
-        <tr>
-          <th>nama member</th>
-          <th>Enrollment</th>
-          <th>Nama Buku</th>
-          <th>Pengarang</th>
-          <th>Tanggal pinjam</th>
-          <th>Expiry Date</th>
-          <th>Fine</th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-        <td colspan="7">
-        <div class="links"></div>
-        </td>
-        </tr>
-        </tfoot>
-        <tbody>
-          {% for t in li %}
             <tr>
-              <td>{{t.0}}</td>
-              <td>{{t.1}}</td>
-              <td>{{t.2}}</td>
-              <td>{{t.3}}</td>
-              <td>{{t.4}}</td>
-              <td>{{t.5}}</td>
-              <td>{{t.6}}</td>
+                <th>No.</th>
+                <th>Member</th>
+                <th>Nama Buku</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Jatuh Tempo</th>
+                <th>Status Peminjaman</th>
+                <th>Tindakan</th>
+                
             </tr>
-            {%endfor%}
+        </thead>
+        <tbody>
+            {% for peminjaman in peminjaman_list2 %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ peminjaman.student }}</td>
+                <td>{{ peminjaman.book.name }}</td>
+                <td>{{ peminjaman.date_issued }}</td>
+                <td>{{ peminjaman.date_due }}</td>
+                <td>{{ peminjaman.status}}</td>
+                <td>
+                  <a  class="btn btn-primary btn-sm">Terima</a>
+                  <a  class="btn btn-danger btn-sm">Tolak</a>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-        </table>
+        
+    </table>
     </div>
-    {%else%}
-    <h1> 0 book Issued</h1>
-    {%endif%}
+   
+  
+    
 
     <br><br><br><br><br><br><br><br><br>
   {% include "library/footer.html" %}
