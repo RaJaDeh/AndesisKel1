@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    {% include "library/navbarstudent.html" %}
+    <br><br><br>
     <div class="container">
-        <h1>Daftar Peminjaman Buku</h1>
+        <h1 style="text-align: center;">Daftar Peminjaman Buku</h1>
         <table class="table">
             <tbody>
                 {% if peminjaman_list %}
@@ -32,6 +34,9 @@
             <td>{{ peminjaman.date_issued }}</td>
             <td>{{ peminjaman.date_due }}</td>
             <td>{{ peminjaman.status}}</td>
+            {% if peminjaman.status == "dipinjam" %}
+            <td><button>Kembalikan</button></td>
+            {% endif %}
             
         </tr>
         {% endfor %}
