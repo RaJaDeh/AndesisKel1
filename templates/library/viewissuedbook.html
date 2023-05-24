@@ -89,8 +89,15 @@
                 <td>{{ peminjaman.date_due }}</td>
                 <td>{{ peminjaman.status}}</td>
                 <td>
-                  <a  class="btn btn-primary btn-sm">Terima</a>
-                  <a  class="btn btn-danger btn-sm">Tolak</a>
+                  <form method="post" action="{% url 'accept_peminjaman' peminjaman.id %}">
+                    {% csrf_token %}
+                    <label for="status">Status:</label>
+                    <select name="status" id="status">
+                        <option value="dipinjam">Terima</option>
+                        <option value="ditolak">Tolak</option>
+                    </select>
+                    <button class="btn btn-primary"type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
+                </form>
                 </td>
             </tr>
             {% endfor %}

@@ -306,6 +306,20 @@ def view_peminjaman_admin(request):
     peminjaman_list2 = BookLoan.objects.all()
     return render(request, 'library/viewissuedbook.html', {'peminjaman_list2': peminjaman_list2})
 
+def accept_peminjaman(request, peminjaman_id):
+    peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        if status == 'dipinjam':
+            peminjaman.status = 'dipinjam'
+            peminjaman.save()
+            return redirect('viewiss')
+        elif status == 'ditolak':
+            peminjaman.status = 'ditolak'
+            peminjaman.save()
+            return redirect('viewiss')
+    return render(request, 'library/viewissuedbook.html', {'peminjaman': peminjaman})
+
 
 # from django.contrib.auth import authenticate, login
 # from django.shortcuts import render, redirect
