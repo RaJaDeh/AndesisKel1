@@ -20,7 +20,7 @@ from django.urls import path
 from library import views
 from django.contrib.auth.views import LoginView,LogoutView
 from library.admin import admin_site
-from library.views import custom_admin_login
+# from library.views import custom_admin_login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,7 +49,7 @@ urlpatterns = [
     path('guestview', views.guestview_view),
     path('studentview', views.studentview_view),
     path('issuebook', views.issuebook_view),
-    path('viewissuedbook', views.viewissuedbook_view),
+    path('viewissuedbook', views.view_peminjaman_admin),
     path('viewstudent', views.viewstudent_view),
     path('viewissuedbookbystudent', views.viewissuedbookbystudent),
 
@@ -63,5 +63,5 @@ urlpatterns = [
     path('pinjaman_list', views.daftar_peminjaman, name='peminjaman_list'),
     path('riwayat_peminjaman', views.riwayat_peminjaman, name='riwayat_peminjaman'),
     path('customadmin/', admin_site.urls),
-    path('customadmin/login/', custom_admin_login, name='custom_admin_login'),
+    # path('customadmin/login/', custom_admin_login, name='custom_admin_login'),
 ]

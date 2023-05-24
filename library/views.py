@@ -38,7 +38,6 @@ def adminsignup_view(request):
             user.set_password(user.password)
             user.save()
 
-
             my_admin_group = Group.objects.get_or_create(name='ADMIN')
             my_admin_group[0].user_set.add(user)
 
@@ -170,7 +169,7 @@ def viewissuedbook_view(request):
         if d>15:
             day=d-15
             fine=day*10
-
+    
 
         books=list(models.Book.objects.filter(isbn=ib.isbn))
         students=list(models.StudentExtra.objects.filter(enrollment=ib.enrollment))
@@ -296,19 +295,23 @@ def riwayat_peminjaman(request):
     peminjaman_list = BookLoan.objects.filter(student=student_extra)
     return render(request, 'library/riwayat_peminjaman.html', {'peminjaman_list': peminjaman_list})
 
+def view_peminjaman_admin(request):
+    peminjaman_list2 = BookLoan.objects.all()
+    return render(request, 'library/viewissuedbook.html', {'peminjaman_list2': peminjaman_list2})
 
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 
-def custom_admin_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None and user.is_staff:
-            login(request, user)
-            return redirect('admin:index')
-        else:
-            error_message = 'Invalid username or password.'
-            return render(request, 'customadmin/login.html', {'error_message': error_message})
-    return render(request, 'customadmin/login.html')
+# from django.contrib.auth import authenticate, login
+# from django.shortcuts import render, redirect
+
+# def custom_admin_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None and user.is_staff:
+#             login(request, user)
+#             return redirect('admin:index')
+#         else:
+#             error_message = 'Invalid username or password.'
+#             return render(request, 'customadmin/login.html', {'error_message': error_message})
+#     return render(request, 'customadmin/login.html')
