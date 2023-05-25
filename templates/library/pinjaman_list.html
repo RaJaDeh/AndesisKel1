@@ -27,6 +27,7 @@
     </thead>
     <tbody>
         {% for peminjaman in peminjaman_list %}
+        {%if peminjaman.status != "dikembalikan" %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ peminjaman.student }}</td>
@@ -36,10 +37,7 @@
             <td>{{ peminjaman.status}}</td>
             
             <td>
-                {% if peminjaman.status == "dipinjam" %}
-                <button class="btn ">Kembalikan</button>
-                {% endif %}
-                {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" %}
+                {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status %}
                 <form action="{% url 'peminjaman_list' %}" method="POST">
                   {% csrf_token %}
                   <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
@@ -52,6 +50,7 @@
             
             
         </tr>
+        {%endif%}
         {% endfor %}
     </tbody>
 </table>

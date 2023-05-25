@@ -80,8 +80,8 @@
             </tr>
         </thead>
         <tbody>
-            {% for peminjaman in peminjaman_list2 %}
-            {% if peminjaman.status != "dipinjam" %}
+            {% for peminjaman in peminjaman_list3 %}
+            {% if peminjaman.status == "dipinjam" %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ peminjaman.student }}</td>
@@ -91,17 +91,13 @@
                 <td>{{ peminjaman.status}}</td>
                 
                 <td>
-                  {% if peminjaman.status == "menunggu konfirmasi peminjaman"%}
-                  <form method="post" action="{% url 'accept_peminjaman' peminjaman.id %}">
-                    {% csrf_token %}
-                    <label for="status">Status:</label>
-                    <select name="status" id="status">
-                        <option value="dipinjam">Terima</option>
-                        <option value="ditolak">Tolak</option>
-                    </select>
-                    <button class="btn btn-primary"type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
-                </form>
-                {%endif%}
+                  
+                    <form action="{% url 'pengembalian' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Buku sudah diterima?')">Kembalikan</button>
+                      </form>
+                
                 </td>
                 
             </tr>
