@@ -290,6 +290,9 @@ def daftar_peminjaman(request):
         peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
         peminjaman.status = 'Canceled'
         peminjaman.save()
+        book = peminjaman.book
+        book.jumlah_buku += 1
+        book.save()
         return redirect('peminjaman_list')
     
     student_extra = StudentExtra.objects.get(user=request.user)
@@ -317,6 +320,9 @@ def accept_peminjaman(request, peminjaman_id):
         elif status == 'ditolak':
             peminjaman.status = 'ditolak'
             peminjaman.save()
+            book = peminjaman.book
+            book.jumlah_buku += 1
+            book.save()
             return redirect('viewiss')
     return render(request, 'library/viewissuedbook.html', {'peminjaman': peminjaman})
 

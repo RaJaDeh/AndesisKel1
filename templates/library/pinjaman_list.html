@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Peminjaman Buku</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .rejected-row {
+            background-color: #f2f2f2; /* Warna abu-abu */
+        }
+    </style>
 </head>
 <body>
     {% include "library/navbarstudent.html" %}
@@ -12,54 +17,70 @@
     <div class="container">
         <h1 style="text-align: center;">Daftar Peminjaman Buku</h1>
         <table class="table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Member</th>
+                    <th>Nama Buku</th>
+                    <th>Tanggal Peminjaman</th>
+                    <th>Tanggal Jatuh Tempo</th>
+                    <th>Status Peminjaman</th>
+                </tr>
+            </thead>
             <tbody>
-                {% if peminjaman_list %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Member</th>
-            <th>Nama Buku</th>
-            <th>Tanggal Peminjaman</th>
-            <th>Tanggal Jatuh Tempo</th>
-            <th>Status Peminjaman</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for peminjaman in peminjaman_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ peminjaman.student }}</td>
-            <td>{{ peminjaman.book.name }}</td>
-            <td>{{ peminjaman.date_issued }}</td>
-            <td>{{ peminjaman.date_due }}</td>
-            <td>{{ peminjaman.status}}</td>
-            
-            <td>
-                {% if peminjaman.status == "dipinjam" %}
-                <button>Kembalikan</button>
-                {% endif %}
-                {% if peminjaman.status != 'Canceled' %}
-                <form action="{% url 'peminjaman_list' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
-                </form>
-              {% endif %}
-            
-            
-            </td>
-            
-            
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Anda belum melakukan peminjaman buku.</p>
-{% endif %}
+                {% for peminjaman in peminjaman_list %}
+  <tr {% if peminjaman.status == 'ditolak' %}class="rejected-row"{% endif %}>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ peminjaman.student }}</td>
+    <td>{{ peminjaman.book.name }}</td>
+    <td>{{ peminjaman.date_issued }}</td>
+    <td>{{ peminjaman.date_due }}</td>
+    <td>{{ peminjaman.status }}</td>
+    <td>
+      {% if peminjaman.status == "dipinjam" %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tiketModal{{ peminjaman.id }}">Lihat Tiket</button>
+        <button type="button" class="btn btn-success">Kembalikan</button>
+      {% endif %}
+      {% if peminjaman.status == 'menunggu konfirmasi peminjaman' or peminjaman.status == 'waiting_approval' %}
+        <form action="{% url 'peminjaman_list' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
+        </form>
+      {% endif %}
+    </td>
+  </tr>
+
+<!-- Tiket Modal -->
+<div class="modal fade" id="tiketModal{{ peminjaman.id }}" tabindex="-1" role="dialog" aria-labelledby="tiketModalLabel{{ peminjaman.id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="tiketModalLabel{{ peminjaman.id }}">Tiket Peminjaman Buku</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Identitas Siswa:</strong> {{ peminjaman.student }}</p>
+          <p><strong>Keterangan Buku:</strong> {{ peminjaman.book.name }}</p>
+          <p><strong>Tanggal Peminjaman:</strong> {{ peminjaman.date_issued }}</p>
+          <p><strong>Tanggal Jatuh Tempo:</strong> {{ peminjaman.date_due }}</p>
+          <p><strong>Catatan:</strong> Perlihatkan tiket ini ke pustakawan saat Anda berada di perpustakaan.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
             </tbody>
         </table>
+        {% if not peminjaman_list %}
+            <p>Anda belum melakukan peminjaman buku.</p>
+        {% endif %}
     </div>
 </body>
 </html>

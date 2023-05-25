@@ -80,27 +80,29 @@
             </tr>
         </thead>
         <tbody>
-            {% for peminjaman in peminjaman_list2 %}
+            {{% for peminjaman in peminjaman_list2 %}
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ peminjaman.student }}</td>
-                <td>{{ peminjaman.book.name }}</td>
-                <td>{{ peminjaman.date_issued }}</td>
-                <td>{{ peminjaman.date_due }}</td>
-                <td>{{ peminjaman.status}}</td>
-                <td>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ peminjaman.student }}</td>
+              <td>{{ peminjaman.book.name }}</td>
+              <td>{{ peminjaman.date_issued }}</td>
+              <td>{{ peminjaman.date_due }}</td>
+              <td>{{ peminjaman.status }}</td>
+              <td>
+                {% if peminjaman.status != 'Canceled' %}
                   <form method="post" action="{% url 'accept_peminjaman' peminjaman.id %}">
                     {% csrf_token %}
                     <label for="status">Status:</label>
                     <select name="status" id="status">
-                        <option value="dipinjam">Terima</option>
-                        <option value="ditolak">Tolak</option>
+                      <option value="dipinjam">Terima</option>
+                      <option value="ditolak">Tolak</option>
                     </select>
-                    <button class="btn btn-primary"type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
-                </form>
-                </td>
+                    <button class="btn btn-primary" type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
+                  </form>
+                {% endif %}
+              </td>
             </tr>
-            {% endfor %}
+          {% endfor %}
         </tbody>
         
     </table>
