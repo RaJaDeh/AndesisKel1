@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiket Peminjaman</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <center> <h2 class="atas">Tiket Peminjaman Buku </h2> </center>
+        <br>
+
+        
+        <center> <h2 class="acc">Permintaan Diterima  </h2> </center>
+        
+        <table class="small-table">
+            <tr>
+              <td>
+                <img src="Vector.png" alt="centang" class="centang" />
+              </td>
+              <td>
+                <h2 class="nomor"> Nomor : {{peminjaman.id}} </h2>
+              </td>
+            </tr>
+          </table>
+        
+        <div class="containerbuku">
+            <table class="table table-hover table-condensed" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="vertical-align: top; text-align: left;">
+                      <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                    </td>
+                    <td>   
+                      <div class="details">
+                      <strong>{{ book.name }}</strong>
+                        <br> </br>
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                            <li>ISBN</li>
+                            <li>Penulis</li>
+                            <li>Penerbit</li>
+                            <li>Genre</li>
+                            <li>Tanggal Peminjaman</li>
+                            <li>Waktu Pengambilan</li>
+                            <li>Durasi Peminjaman</li>
+                            <li>Batas Pengembalian</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>: {{ book.isbn }}</li>
+                            <li>: {{ book.author }}</li>
+                            <li>: {{ book.publisher }}</li>
+                            <li>: {{ book.category }}</li>
+                            <li>: {{ peminjaman.tanggal }}</li>
+                            <li>: {{ peminjaman.shift }}</li>
+                            <li>: {{ peminjaman.durasi }}</li>
+                            <li>: {{ peminjaman.expired }}</li>
+                        </ul>
+                      </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <strong> <h2 class="sign">Penting</h2> </strong>
+              <span style="font-weight: normal;">1. Screenshot dan tunjukkan tiket ini saat datang untuk pengambilan buku.</span>
+              <span style="font-weight: normal;">2. Tiket tidak berlaku apabila Anda datang di luar dari waktu yang ditentukan.</span>
+              <span style="font-weight: normal;">3. Tiket akan otomatis hangus dan tidak perlu dibatalkan. Silakan buat ulang tiket jika Anda memang masih ingin meminjam dilain waktu.</span>
+              <span style="font-weight: normal;">4. Tolong kembalikan buku sesegera mungkin setelah Anda selesai membacanya.</span>
+              <span style="font-weight: normal;">5. Screenshot dan tunjukkan tiket ini saat datang untuk pengambilan buku.</span>
+            </div>
+            <button>Kembali</button>
+        </div>
+    </div>
+</body>
+</html>

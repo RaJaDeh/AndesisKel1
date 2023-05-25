@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="atas">Aktivitas Saya </h2>
+        <div class="button-container">
+        <button>Semua Data</button>
+        <button>Sedang Dipinjam</button>
+        <button>Mendekati Jatuh Tempo</button>
+        <button>Sudah Jatuh Tempo</button>
+        <button>Sudah Dikembalikan</button>
+        </div>
+        <h2 class="atas">Rincian :  </h2>
+        <div class="containerbuku">
+            <table class="table table-hover table-condensed" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td colspan="2">
+                      <div class="links"></div>
+                    </td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td style="vertical-align: top;">
+                      <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                    </td>
+                    <td>   
+                      <div class="details">
+                      <strong>{{ book.name }}</strong>
+                        <br> </br>
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                            <li>Nomor Peminjaman</li>
+                            <li>ISBN</li>
+                            <li>Penulis</li>
+                            <li>Penerbit</li>
+                            <li>Genre</li>
+                            <li>Lokasi Buku</li>
+                            <li>Jumlah Ketersediaan</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>: {{ peminjaman.id }}</li>
+                            <li>: {{ book.isbn }}</li>
+                            <li>: {{ book.author }}</li>
+                            <li>: {{ book.publisher }}</li>
+                            <li>: {{ book.category }}</li>
+                            <li>: {{ book.lokasi_buku }}</li>
+                            <li>: {{ book.jumlah_buku }}</li>
+                        </ul>
+                      </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="status">
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                          <li><strong>Status </strong></li>
+                          <li>Tanggal Pinjam</li>
+                          <li>Tanggal Harus Kembali</li>
+                          <li>Tanggal Pengembalian</li>
+                          <li>Jumlah Hari Terlambat</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><strong>: {{ peminjaman.status}} </strong></li>
+                            <li>: {{ peminjaman.tanggalpinjam }}</li>
+                            <li>: {{ peminjaman.tanggalexpired }}</li>
+                            <li>: {{ peminjaman.tanggalpengembalian }}</li>
+                            <li>: {{ #logic=tanggalhariini-tanggalpengembalian }}</li>
+                          </ul>
+                      </div>
+                    </div>
+                    </td>
+                  </tr>
+                  
+                  <tr>
+                    <td colspan="2">
+                      <div class="links"></div>
+                    </td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td style="vertical-align: top;">
+                      <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                    </td>
+                    <td>   
+                      <div class="details">
+                        <a href="{% url 'book_details' book.isbn %}" style="color: black"><strong>{{ book.name }}</strong></a>
+                        <br> </br>
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                            <li>Nomor Peminjaman</li>
+                            <li>ISBN</li>
+                            <li>Penulis</li>
+                            <li>Penerbit</li>
+                            <li>Genre</li>
+                            <li>Lokasi Buku</li>
+                            <li>Jumlah Ketersediaan</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>: {{ peminjaman.id }}</li>
+                            <li>: {{ book.isbn }}</li>
+                            <li>: {{ book.author }}</li>
+                            <li>: {{ book.publisher }}</li>
+                            <li>: {{ book.category }}</li>
+                            <li>: {{ book.lokasi_buku }}</li>
+                            <li>: {{ book.jumlah_buku }}</li>
+                        </ul>
+                      </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="status">
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                          <li><strong>Status </strong></li>
+                          <li>Tanggal Pinjam</li>
+                          <li>Tanggal Harus Kembali</li>
+                          <li>Tanggal Pengembalian</li>
+                          <li>Jumlah Hari Terlambat</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><strong>: {{ peminjaman.status}} </strong></li>
+                            <li>: {{ peminjaman.tanggalpinjam }}</li>
+                            <li>: {{ peminjaman.tanggalexpired }}</li>
+                            <li>: {{ peminjaman.tanggalpengembalian }}</li>
+                            <li>: {{ #logic=tanggalhariini-tanggalpengembalian }}</li>
+                          </ul>
+                      </div>
+                    </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2">
+                      <div class="links"></div>
+                    </td>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr>
+                    <td style="vertical-align: top;">
+                      <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                    </td>
+
+                    <td>   
+                      <div class="details">
+                        <a href="{% url 'book_details' book.isbn %}" style="color: black"><strong>{{ book.name }}</strong></a>
+                        <br> </br>
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                            <li>Nomor Peminjaman</li>
+                            <li>ISBN</li>
+                            <li>Penulis</li>
+                            <li>Penerbit</li>
+                            <li>Genre</li>
+                            <li>Lokasi Buku</li>
+                            <li>Jumlah Ketersediaan</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>: {{ peminjaman.id }}</li>
+                            <li>: {{ book.isbn }}</li>
+                            <li>: {{ book.author }}</li>
+                            <li>: {{ book.publisher }}</li>
+                            <li>: {{ book.category }}</li>
+                            <li>: {{ book.lokasi_buku }}</li>
+                            <li>: {{ book.jumlah_buku }}</li>
+                        </ul>
+                      </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="status">
+                        <div class="list-container">
+                        <ul class="list-unstyled">
+                          <li><strong>Status </strong></li>
+                          <li>Tanggal Pinjam</li>
+                          <li>Tanggal Harus Kembali</li>
+                          <li>Tanggal Pengembalian</li>
+                          <li>Jumlah Hari Terlambat</li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li><strong>: {{ peminjaman.status}} </strong></li>
+                            <li>: {{ peminjaman.tanggalpinjam }}</li>
+                            <li>: {{ peminjaman.tanggalexpired }}</li>
+                            <li>: {{ peminjaman.tanggalpengembalian }}</li>
+                            <li>: {{ #logic=tanggalhariini-tanggalpengembalian }}</li>
+                          </ul>
+                      </div>
+                    </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+              </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
