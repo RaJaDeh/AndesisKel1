@@ -37,9 +37,9 @@
             
             <td>
                 {% if peminjaman.status == "dipinjam" %}
-                <button>Kembalikan</button>
+                <button class="btn ">Kembalikan</button>
                 {% endif %}
-                {% if peminjaman.status != 'Canceled' %}
+                {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" %}
                 <form action="{% url 'peminjaman_list' %}" method="POST">
                   {% csrf_token %}
                   <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
