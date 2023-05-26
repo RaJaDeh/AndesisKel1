@@ -4,6 +4,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style media="screen">
+  .container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
 .btn-circle.btn-xl {
   width: 70px;
   height: 70px;
@@ -31,7 +44,7 @@
   text-align: center;
 }
 .my-table-row {
-    background-color: #72FACA;
+    background-color: #95ffda;
     transition: background-color 0.3s ease;
   }
 
@@ -44,6 +57,25 @@
   width: 1%;
   white-space: nowrap;
 }
+.container .containertable {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .containertable tbody {
+        padding-bottom: 20px;
+    }
 
 
 </style>
@@ -52,9 +84,7 @@
     {% include "library/navbarstudent.html" %}
     <br>
     <br>
-    <center><h3 style=" margin-bottom: 0px;" class='alert alert-success'>Selamat datang di PerpusLink</h3></center>
-    <div class="jumbotron"   style="    margin-bottom: 0px;">
-    <h1 class="display-4">Hallo {{user.first_name}} !</h1>
+    <center><h3 style=" margin-bottom: 0px;" class='alert alert-success'>Cari buku di PerpusLink</h3></center>
     <p class="lead">
     </p>
 
@@ -70,8 +100,8 @@
     
 {% if books%}
 <div class="container">
-  <div class="row justify-content-center">
-  <table class="table table-bordered table-co" style="width: 70%;">
+  <div class="containertable">
+  <table class="table table-co">
     <thead>
       <tr>
         <th></th>
@@ -95,12 +125,23 @@
           <a href="{% url 'book_details' book.isbn %}" style="color: black"><strong>{{ book.name }}</strong></a>
         </li>
         <br>
-        <li><strong>ISBN:</strong> {{ book.isbn }}</li>
-        <li><strong>Penulis:</strong> {{ book.author }}</li>
-        <li><strong>Kategori:</strong> {{ book.category }}</li>
-        <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
-        <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>  
+        <li><strong>ISBN</strong></li>
+        <li><strong>Penulis</strong></li>
+        <li><strong>Kategori</strong></li>
+        <li><strong>Jumlah Buku</strong></li>
+        <li><strong>Lokasi Rak</strong></li>  
       </ul>
+      <td>
+        <ul class="list-unstyled">
+        
+        <br><br>
+        <li><strong>: {{ book.isbn }}</strong></li>
+        <li><strong>: {{ book.author }}</strong></li>
+        <li><strong>: {{ book.category }}</strong></li>
+        <li><strong>: {{ book.jumlah_buku }}</strong></li>
+        <li><strong>: {{ book.lokasi_buku }}</strong></li> 
+      </ul>
+      </td>
     </td>
     <td class="fit-to-button">
       {% if book.jumlah_buku > 0 %}
