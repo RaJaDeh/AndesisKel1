@@ -23,7 +23,7 @@
     }
 
     .container {
-        width: 1200px;
+        width: 90%;
         margin: 0 auto;
         max-height: fit-content;
         background: #72FACA;
@@ -32,7 +32,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        padding: 20px;
+        padding: 5%;
         overflow: hidden;
     }
 
@@ -161,15 +161,15 @@
             <br><br><br>
             <h2 class="atas">Aktivitas Saya </h2>
             <div class="button-container">
-            <button>Semua Data</button>
-            <button>Sedang Dipinjam</button>
-            <button>Mendekati Jatuh Tempo</button>
-            <button>Sudah Jatuh Tempo</button>
-            <button>Sudah Dikembalikan</button>
+                <button class ="filter-button" data-mode="all">Semua Data</button>
+                <button class ="filter-button" data-mode="menunggu">Menunggu Konfirmasi</button>
+                <button class ="filter-button" data-mode="dipinjam">Sedang Dipinjam</button>
+                <button class ="filter-button" data-mode="dikembalikan">Sudah Dikembalikan</button>
+                <button class ="filter-button" data-mode="batal">Dibatalkan/Ditolak</button>
             </div>
             <h2 class="atas">Rincian :  </h2>
             <div class="containerbuku">
-                <table class="table table-hover table-condensed" style="width: 100%;">
+                <table class="table table-hover table-condensed" style="width: 90%;">
                     <thead>
                     <tr>
                         <th></th>
