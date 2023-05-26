@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Peminjaman Buku</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    
+    <style media="screen">
+      table.redTable {
+      border: 2px solid #607d8b;
+      background-color: #EEE7DB;
+      width: 100%;
+      text-align: center;
+      border-collapse: collapse;
+      }
+      table.redTable td, table.redTable th {
+      border: 1px solid #AAAAAA;
+      padding: 3px 2px;
+      }
+      table.redTable tbody td {
+      font-size: 13px;
+      }
+      table.redTable tr:nth-child(even) {
+      background: #ffffff;
+      }
+      table.redTable thead {
+      background: #607d8b;
+      }
+      table.redTable thead th {
+      font-size: 19px;
+      font-weight: bold;
+      color: #FFFFFF;
+      text-align: center;
+      border-left: 2px solid #607d8b;
+      }
+      table.redTable thead th:first-child {
+      border-left: none;
+      }
+      
+      table.redTable tfoot {
+      font-size: 13px;
+      font-weight: bold;
+      color: #FFFFFF;
+      background: #607d8b;
+      }
+      table.redTable tfoot td {
+      font-size: 13px;
+      }
+      table.redTable tfoot .links {
+      text-align: right;
+      }
+      table.redTable tfoot .links a{
+      display: inline-block;
+      background: #FFFFFF;
+      color: #607d8b;
+      padding: 2px 8px;
+      border-radius: 5px;
+      }
+      </style>
+  </head>
+  <body>
+    {% include "library/navbaradmin.html" %}
+    <br>
+    <br>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;margin-bottom:0px;'>Issued books to Student</h3>
+
+    <div class="container">
+      
+      <table class="table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Member</th>
+                <th>Nama Buku</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Jatuh Tempo</th>
+                <th>Status Peminjaman</th>
+                <th>Tindakan</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for peminjaman in peminjaman_list3 %}
+            {% if peminjaman.status == "dipinjam" %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ peminjaman.student }}</td>
+                <td>{{ peminjaman.book.name }}</td>
+                <td>{{ peminjaman.date_issued }}</td>
+                <td>{{ peminjaman.date_due }}</td>
+                <td>{{ peminjaman.status}}</td>
+                
+                <td>
+                  
+                    <form action="{% url 'pengembalian' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Buku sudah diterima?')">Kembalikan</button>
+                      </form>
+                
+                </td>
+                
+            </tr>
+            {%endif%}
+            {% endfor %}
+        </tbody>
+        
+    </table>
+    </div>
+   
+  
+    
+
+    <br><br><br><br><br><br><br><br><br>
+  {% include "library/footer.html" %}
+  </body>
+</html>

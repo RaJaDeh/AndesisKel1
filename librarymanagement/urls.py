@@ -50,6 +50,7 @@ urlpatterns = [
     path('studentview', views.studentview_view),
     path('issuebook', views.issuebook_view),
     path('viewissuedbook', views.view_peminjaman_admin, name="viewiss"),
+    path('pengembalianadmin', views.view_pengembalian_admin, name="pengembalian"),
     path('viewstudent', views.viewstudent_view),
     path('viewissuedbookbystudent', views.viewissuedbookbystudent),
 

@@ -7,56 +7,74 @@
     <meta charset="utf-8">
     
     <style media="screen">
-      table.redTable {
-      border: 2px solid #607d8b;
-      background-color: #EEE7DB;
-      width: 100%;
-      text-align: center;
-      border-collapse: collapse;
-      }
-      table.redTable td, table.redTable th {
-      border: 1px solid #AAAAAA;
-      padding: 3px 2px;
-      }
-      table.redTable tbody td {
-      font-size: 13px;
-      }
-      table.redTable tr:nth-child(even) {
-      background: #ffffff;
-      }
-      table.redTable thead {
-      background: #607d8b;
-      }
-      table.redTable thead th {
-      font-size: 19px;
-      font-weight: bold;
-      color: #FFFFFF;
-      text-align: center;
-      border-left: 2px solid #607d8b;
-      }
-      table.redTable thead th:first-child {
-      border-left: none;
-      }
-      
-      table.redTable tfoot {
-      font-size: 13px;
-      font-weight: bold;
-      color: #FFFFFF;
-      background: #607d8b;
-      }
-      table.redTable tfoot td {
-      font-size: 13px;
-      }
-      table.redTable tfoot .links {
-      text-align: right;
-      }
-      table.redTable tfoot .links a{
-      display: inline-block;
-      background: #FFFFFF;
-      color: #607d8b;
-      padding: 2px 8px;
-      border-radius: 5px;
-      }
+      .container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+      .container .button-container {
+        display: flex;
+        flex-wrap: wrap; 
+        margin-top: 15px; 
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .container .button-container button {
+        border: none;
+        outline: none;
+        padding: 10px;
+        color: gray;
+        font-size: 14px;
+        font-weight: bolder;
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-right: 5px; 
+        border-radius: 12.67px;
+        background: white;
+        opacity: 100%;
+        height: 65px;
+        max-width: 250px;
+        white-space: nowrap;
+        flex-grow: 1; 
+    }
+
+    .container .button-container button:hover {
+        font-size: 14px;
+        font-weight: bolder;
+        color: white;
+        padding: 10px;
+        background: #444444;
+        height: 65px;
+        border-radius: 12.67px;
+    }
+    .container .containertable {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .containertable tbody {
+        padding-bottom: 20px;
+    }
       </style>
   </head>
   <body>
@@ -66,7 +84,15 @@
     <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;margin-bottom:0px;'>Issued books to Student</h3>
 
     <div class="container">
-      <table class="table">
+      <div class="button-container">
+        <button class ="filter-button" data-mode="all">Semua Data</button>
+        <button class ="filter-button" data-mode="menunggu">Menunggu Konfirmasi</button>
+        <button class ="filter-button" data-mode="dipinjam">Sedang Dipinjam</button>
+        <button class ="filter-button" data-mode="dikembalikan">Sudah Dikembalikan</button>
+        </div>
+        <br>
+      <div class="containertable">
+        <table id = "peminjaman-table" class="table">
         <thead>
             <tr>
                 <th>No.</th>
@@ -79,17 +105,25 @@
                 
             </tr>
         </thead>
-        <tbody>
-            {{% for peminjaman in peminjaman_list2 %}
-            <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ peminjaman.student }}</td>
-              <td>{{ peminjaman.book.name }}</td>
-              <td>{{ peminjaman.date_issued }}</td>
-              <td>{{ peminjaman.date_due }}</td>
-              <td>{{ peminjaman.status }}</td>
-              <td>
-                {% if peminjaman.status != 'Canceled' %}
+            {% for peminjaman in peminjaman_list2 %}
+            {% if peminjaman.status == "menunggu konfirmasi peminjaman" %}
+              <tr data-status="menunggu">
+            {% elif peminjaman.status == "dipinjam" %}
+              <tr data-status="dipinjam">
+            {% elif peminjaman.status == "dikembalikan" %}
+              <tr data-status="dikembalikan">
+            {% else %}
+              <tr data-status="all">
+            {% endif %}
+                <td>{{ forloop.counter }}</td>
+                <td>{{ peminjaman.student }}</td>
+                <td>{{ peminjaman.book.name }}</td>
+                <td>{{ peminjaman.date_issued }}</td>
+                <td>{{ peminjaman.date_due }}</td>
+                <td>{{ peminjaman.status}}</td>
+                
+                {%if peminjaman.status == "menunggu konfirmasi peminjaman"%}
+                <td>  
                   <form method="post" action="{% url 'accept_peminjaman' peminjaman.id %}">
                     {% csrf_token %}
                     <label for="status">Status:</label>
@@ -97,15 +131,29 @@
                       <option value="dipinjam">Terima</option>
                       <option value="ditolak">Tolak</option>
                     </select>
-                    <button class="btn btn-primary" type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
-                  </form>
-                {% endif %}
-              </td>
+                    <button class="btn btn-primary"type="submit" onclick="return confirm('Apakah Anda yakin ingin melakukan tindakan ini?')">Submit</button>
+                </form>
+                </td>
+                {%endif%}
+                {%if peminjaman.status == "dipinjam"%}
+                <td>
+                  
+                  <form action="{% url 'pengembalian' %}" method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Buku sudah diterima?')">Kembalikan</button>
+                    </form>
+              
+                </td>
+                {%endif%}
+                   
             </tr>
-          {% endfor %}
+            
+            {% endfor %}
         </tbody>
         
     </table>
+  </div>
     </div>
    
   
@@ -113,5 +161,36 @@
 
     <br><br><br><br><br><br><br><br><br>
   {% include "library/footer.html" %}
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Mengambil elemen tombol filter
+      var filterButtons = $('.filter-button');
+  
+      // Menambahkan event click pada tombol filter
+      filterButtons.click(function() {
+        // Menghapus kelas active dari semua tombol filter
+        filterButtons.removeClass('active');
+  
+        // Menambahkan kelas active pada tombol yang diklik
+        $(this).addClass('active');
+  
+        // Mendapatkan mode yang dipilih dari atribut data-mode
+        var mode = $(this).data('mode');
+  
+        // Menyembunyikan semua baris tabel
+        $('#peminjaman-table tbody tr').hide();
+  
+        // Menampilkan baris tabel berdasarkan mode yang dipilih
+        if (mode === 'all') {
+          $('#peminjaman-table tbody tr').show();
+        } else {
+          $('#peminjaman-table tbody tr[data-status="' + mode + '"]').show();
+        }
+      });
+    });
+  </script>
+  
   </body>
 </html>

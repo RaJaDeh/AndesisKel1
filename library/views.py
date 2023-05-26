@@ -296,7 +296,7 @@ def daftar_peminjaman(request):
         return redirect('peminjaman_list')
     
     student_extra = StudentExtra.objects.get(user=request.user)
-    peminjaman_list = BookLoan.objects.filter(student=student_extra)
+    peminjaman_list = BookLoan.objects.filter(student=student_extra).order_by('status')
     return render(request, 'library/pinjaman_list.html', {'peminjaman_list': peminjaman_list})
 
 @login_required
@@ -325,6 +325,18 @@ def accept_peminjaman(request, peminjaman_id):
             book.save()
             return redirect('viewiss')
     return render(request, 'library/viewissuedbook.html', {'peminjaman': peminjaman})
+
+def view_pengembalian_admin(request):
+
+    if request.method == 'POST':
+        peminjaman_id = request.POST.get('peminjaman_id')
+        peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+        peminjaman.status = 'dikembalikan'
+        peminjaman.save()
+        return redirect('pengembalian')
+    
+    peminjaman_list3 = BookLoan.objects.all()
+    return render(request, 'library/pengembalian_admin.html', {'peminjaman_list3': peminjaman_list3})
 
 
 # from django.contrib.auth import authenticate, login
