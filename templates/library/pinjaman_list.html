@@ -1,12 +1,15 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Peminjaman</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman</title>
     <style>
-    * {
+        /* Kode CSS Anda */
+
+        /* ... */
+        * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -149,92 +152,114 @@
     .containerbuku tbody tr:hover {
         background-color: #008a61;
     }
-    
 
     </style>
-    </head>
-    <body>
-        
-        {% include "library/navbarstudent.html" %}
-        
-        <div class="container">
-            <br><br><br>
-            <h2 class="atas">Aktivitas Saya </h2>
-            <div class="button-container">
+</head>
+<body>
+    {% include "library/navbarstudent.html" %}
+    
+    <div class="container">
+        <br><br><br>
+        <h2 class="atas">Aktivitas Saya</h2>
+        <div class="button-container">
             <button>Semua Data</button>
             <button>Sedang Dipinjam</button>
             <button>Mendekati Jatuh Tempo</button>
             <button>Sudah Jatuh Tempo</button>
             <button>Sudah Dikembalikan</button>
-            </div>
-            <h2 class="atas">Rincian :  </h2>
-            <div class="containerbuku">
-                <table class="table table-hover table-condensed" style="width: 100%;">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <txr>
-                        <td colspan="2">
-                        <div class="links"></div>
-                        </td>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    {%for peminjaman in peminjaman_list%}
-                    <!-- {%if peminjaman.status != "dikembalikan"%}   -->
-                    <tr>
-                        <td style="vertical-align: top;">
-                        <img src="coverhujan.jpg" alt="cover" class="cover"/>
-                        </td>
-                        <td>   
-                        <div class="details">
-                        <strong>{{ peminjaman.book.name }}</strong>
-                            <br> </br>
-                            <div class="list-container">
-                            <ul class="list-unstyled">
-                                <li>ISBN</li>
-                                <li>Lokasi Buku</li>
-                                <li>Jumlah Ketersediaan</li>
-                                <li><strong>Status </strong></li>
-                                <li><strong>Tanggal Peminjaman </strong></li>
-                                <li><strong>Tanggal Pengembalian </strong></li>
-                            </ul>
-                            
-                            <ul class="list-unstyled">
-                                <li>: {{ peminjaman.book.isbn }}</li>
-                                <li>: {{ peminjaman.book.lokasi_buku }}</li>
-                                <li>: {{ peminjaman.book.jumlah_buku }}</li>
-                                <li><strong>: {{ peminjaman.status}} </strong></li>
-                                <li><strong>: {{ peminjaman.date_issued}} </strong></li>
-                                <li><strong>: {{ peminjaman.date_due}} </strong></li>
-                            </ul>
-                        </div>
-                        </div>
-                        </td>
-                        <td> {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status %}
-                            <br>
-                            <form action="{% url 'peminjaman_list' %}" method="POST">
-                              {% csrf_token %}
-                              <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
-                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
-                            </form>
-                          {% endif %}
-                        </td>
-                        
-                    </tr>
-                    
-                    </tfoot>
-                        <!-- {%endif%} -->
-                        {%endfor%}
-                        
-
-                    </tbody>
-                </table>
-            </div>
         </div>
-    </body>
-    </html>
+        <h2 class="atas">Rincian:</h2>
+        <div class="containerbuku">
+            <table class="table table-hover table-condensed" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th> <!-- Tambahkan kolom untuk tombol tiket -->
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <div class="links"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for peminjaman in peminjaman_list %}
+                        <tr>
+                            <td style="vertical-align: top;">
+                                <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                            </td>
+                            <td>   
+                                <div class="details">
+                                    <strong>{{ peminjaman.book.name }}</strong>
+                                    <br> </br>
+                                    <div class="list-container">
+                                        <ul class="list-unstyled">
+                                            <li>ISBN</li>
+                                            <li>Lokasi Buku</li>
+                                            <li>Jumlah Ketersediaan</li>
+                                            <li><strong>Status</strong></li>
+                                            <li><strong>Tanggal Peminjaman</strong></li>
+                                            <li><strong>Tanggal Pengembalian</strong></li>
+                                        </ul>
+                                        <ul class="list-unstyled">
+                                            <li>: {{ peminjaman.book.isbn }}</li>
+                                            <li>: {{ peminjaman.book.lokasi_buku }}</li>
+                                            <li>: {{ peminjaman.book.jumlah_buku }}</li>
+                                            <li><strong>: {{ peminjaman.status }}</strong></li>
+                                            <li><strong>: {{ peminjaman.date_issued }}</strong></li>
+                                            <li><strong>: {{ peminjaman.date_due }}</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if peminjaman.status == 'menunggu konfirmasi peminjaman' or peminjaman.status == 'waiting_approval' %}
+        <form action="{% url 'peminjaman_list' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+          <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Batalkan</button>
+        </form>
+      {% endif %}
+                                {% if peminjaman.status == 'dipinjam' %}
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tiketModal{{ peminjaman.id }}">Tiket</button> <!-- Tombol tiket -->
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="modal fade" id="tiketModal{{ peminjaman.id }}" tabindex="-1" role="dialog" aria-labelledby="tiketModalLabel{{ peminjaman.id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="tiketModalLabel{{ peminjaman.id }}">Tiket Peminjaman Buku</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p><strong>Identitas Siswa:</strong> {{ peminjaman.student }}</p>
+                                                    <p><strong>Keterangan Buku:</strong> {{ peminjaman.book.name }}</p>
+                                                    <p><strong>Tanggal Peminjaman:</strong> {{ peminjaman.date_issued }}</p>
+                                                    <p><strong>Tanggal Jatuh Tempo:</strong> {{ peminjaman.date_due }}</p>
+                                                    <p><strong>Catatan:</strong> Perlihatkan tiket ini ke pustakawan saat Anda berada di perpustakaan.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
