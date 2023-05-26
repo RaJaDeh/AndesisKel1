@@ -1,64 +1,240 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Peminjaman Buku</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    {% include "library/navbarstudent.html" %}
-    <br><br><br>
-    <div class="container">
-        <h1 style="text-align: center;">Daftar Peminjaman Buku</h1>
-        <table class="table">
-            <tbody>
-                {% if peminjaman_list %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Member</th>
-            <th>Nama Buku</th>
-            <th>Tanggal Peminjaman</th>
-            <th>Tanggal Jatuh Tempo</th>
-            <th>Status Peminjaman</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for peminjaman in peminjaman_list %}
-        {%if peminjaman.status != "dikembalikan" %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ peminjaman.student }}</td>
-            <td>{{ peminjaman.book.name }}</td>
-            <td>{{ peminjaman.date_issued }}</td>
-            <td>{{ peminjaman.date_due }}</td>
-            <td>{{ peminjaman.status}}</td>
-            
-            <td>
-                {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status %}
-                <form action="{% url 'peminjaman_list' %}" method="POST">
-                  {% csrf_token %}
-                  <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
-                </form>
-              {% endif %}
-            
-            
-            </td>
-            
-            
-        </tr>
-        {%endif%}
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Anda belum melakukan peminjaman buku.</p>
-{% endif %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Peminjaman</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Mulish;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #ffff;
+        font-family: Mulish;
+    }
+
+    .container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .container h2 {
+        margin-top: 10px;
+        text-align: left;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .container .button-container {
+        display: flex;
+        flex-wrap: wrap; 
+        margin-top: 15px; 
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .container .button-container button {
+        border: none;
+        outline: none;
+        padding: 10px;
+        color: grey;
+        font-size: 14px;
+        font-weight: bolder;
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-right: 5px; 
+        border-radius: 12.67px;
+        background: white;
+        opacity: 100%;
+        height: 65px;
+        max-width: 250px;
+        white-space: nowrap;
+        flex-grow: 1; 
+    }
+
+    .container .button-container button:hover {
+        font-size: 14px;
+        font-weight: bolder;
+        color: white;
+        padding: 10px;
+        background: #444444;
+        border: 1px solid #008a61;
+        height: 65px;
+        border-radius: 12.67px;
+    }
+
+    .container .containerbuku {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .container .containerbuku .cover {
+        width: 150px;
+        height: auto;
+    }
+
+    .containerbuku tbody {
+        padding-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-spacing: 0;
+    }
+
+    .containerbuku td {
+        padding: 10px;
+        background-color: #95ffda;
+    }
+    .containerbuku tbody tr:hover td {
+        background-color: #008a61; 
+    }
+
+    ul.list-unstyled {
+        margin-top: 0;
+        list-style-type: none;
+        margin-bottom: 10px;
+        padding-right: 10;
+    }
+
+    .list-unstyled li {
+        margin-bottom: 10px;    
+        padding-right: 0;
+    }
+
+    .list-container {
+        display: inline-flex;
+    }
+    
+    .list-container ul:first-child {
+        flex: 1;
+        margin-right: 300px;
+        padding-right: 0;
+    }
+
+    tr {
+        margin-bottom: 20px;
+    }
+
+    .containerbuku tbody tr:hover {
+        background-color: #008a61;
+    }
+    
+
+    </style>
+    </head>
+    <body>
+        
+        {% include "library/navbarstudent.html" %}
+        
+        <div class="container">
+            <br><br><br>
+            <h2 class="atas">Aktivitas Saya </h2>
+            <div class="button-container">
+            <button>Semua Data</button>
+            <button>Sedang Dipinjam</button>
+            <button>Mendekati Jatuh Tempo</button>
+            <button>Sudah Jatuh Tempo</button>
+            <button>Sudah Dikembalikan</button>
+            </div>
+            <h2 class="atas">Rincian :  </h2>
+            <div class="containerbuku">
+                <table class="table table-hover table-condensed" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <txr>
+                        <td colspan="2">
+                        <div class="links"></div>
+                        </td>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {%for peminjaman in peminjaman_list%}
+                    <!-- {%if peminjaman.status != "dikembalikan"%}   -->
+                    <tr>
+                        <td style="vertical-align: top;">
+                        <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                        </td>
+                        <td>   
+                        <div class="details">
+                        <strong>{{ peminjaman.book.name }}</strong>
+                            <br> </br>
+                            <div class="list-container">
+                            <ul class="list-unstyled">
+                                <li>ISBN</li>
+                                <li>Lokasi Buku</li>
+                                <li>Jumlah Ketersediaan</li>
+                                <li><strong>Status </strong></li>
+                                <li><strong>Tanggal Peminjaman </strong></li>
+                                <li><strong>Tanggal Pengembalian </strong></li>
+                            </ul>
+                            
+                            <ul class="list-unstyled">
+                                <li>: {{ peminjaman.book.isbn }}</li>
+                                <li>: {{ peminjaman.book.lokasi_buku }}</li>
+                                <li>: {{ peminjaman.book.jumlah_buku }}</li>
+                                <li><strong>: {{ peminjaman.status}} </strong></li>
+                                <li><strong>: {{ peminjaman.date_issued}} </strong></li>
+                                <li><strong>: {{ peminjaman.date_due}} </strong></li>
+                            </ul>
+                        </div>
+                        </div>
+                        </td>
+                        <td> {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status %}
+                            <br>
+                            <form action="{% url 'peminjaman_list' %}" method="POST">
+                              {% csrf_token %}
+                              <input type="hidden" name="peminjaman_id" value="{{ peminjaman.id }}">
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan peminjaman buku?')">Cancel</button>
+                            </form>
+                          {% endif %}
+                        </td>
+                        
+                    </tr>
+                    
+                    </tfoot>
+                        <!-- {%endif%} -->
+                        {%endfor%}
+                        
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    </html>
