@@ -115,13 +115,13 @@ h2{
 </style>
   </head>
   <body>
-  
+  {%load static%}
    
     
     <nav class="sidebar">
       <header>
           <div class="logo">
-              <img src="Group 13.svg" alt="Logo">
+              <img src="{% static "images/logoPL.png" %}" alt="Logo">
           </div>
       </header>
       <nav>
@@ -129,8 +129,7 @@ h2{
               <li><a href="#" class="active">Dashboard</a></li>
               <li><a href="#">Anggota</a></li>
               <li><a href="#">Buku</a></li>
-              <li><a href="#">Pengaturan</a></li>
-              <li><a href="#">Logout</a></li>
+              <li><a href="logout">Logout</a></li>
           </ul>
       </nav>
   </nav>

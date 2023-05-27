@@ -82,6 +82,7 @@ border-radius: 5px;
                   <p class="card-text">Kategori: {{ book.category }}</p>
                   <p class="card-text">Jumlah Buku: {{ book.jumlah_buku }}</p>
                   <p class="card-text">Lokasi: {{ book.lokasi_buku }}</p>
+                  {% if user.is_authenticated %}
                   <p class="card-text">
                     {% if book.jumlah_buku > 0 %}
                       <a id="borrow-btn" href="{% url 'borrow_book' book.isbn %}" onclick="return confirm('Apakah Anda yakin ingin meminjam buku {{ book.name }}? ISBN: {{ book.isbn }} - Kategori: {{ book.category }}')" class="btn btn-success btn-content">Pinjam</a>
@@ -91,6 +92,8 @@ border-radius: 5px;
 
 
                   </p>
+                  {% endif %}
+                  
               </div>
           </div>
       </div>  
