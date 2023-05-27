@@ -1,7 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <head>
 <style media="screen">
+  *{
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mulish';
+}
+
+body{
+    background: #fff;
+}
+
+.sidebar{
+    background: rgba(114, 250, 202, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 210px;
+    height: 100%;
+    transition: all 0.5s ease;
+}
+.logo{
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: 45px;
+}
+img{
+    display: block;
+    width: 139px;
+    height: 116.6px;
+    margin: 0 auto;
+}
+ul li a{
+    display: block;
+    padding: 13px 30px;
+    border-bottom: 0px solid rgba(114, 250, 202, 0.5);
+    color: #000;
+    font-size: 20px;
+    font-weight: medium;
+    left: 30px;
+    top: 15px;
+    font-family: 'Mulish';
+    position: relative;
+}
+main{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 20px;
+}
+.dashboard-content{
+    margin-top: 10px;
+    margin-left: 250px;
+}
+h2{
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+.dashboard-item ul li a{
+    display: block;
+    color: #000;
+    font-size: 20px;
+    font-family: 'Mulish';
+    position: relative;
+}
+.dashboard-item img{
+    height: 40px;
+    width: 40px;
+    margin-left: -40px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.dashboard-item span{
+    font-weight: 500;
+    margin-left: 20px;
+}
 .btn-circle.btn-xl {
   width: 70px;
   height: 70px;
@@ -33,16 +115,49 @@
 </style>
   </head>
   <body>
-    {% include "library/navbaradmin.html" %}
   
    
-    <div class="jumbotron" >
-    <h1 class="display-4">Hello {{user.first_name}} !</h1>
-    <p class="lead">As you are Admin, you can add a book to library, view available book in library,
-       Issue books to students,
-      View issued book to students and many more ... !
-
-    </p>
+    
+    <nav class="sidebar">
+      <header>
+          <div class="logo">
+              <img src="Group 13.svg" alt="Logo">
+          </div>
+      </header>
+      <nav>
+          <ul>
+              <li><a href="#" class="active">Dashboard</a></li>
+              <li><a href="#">Anggota</a></li>
+              <li><a href="#">Buku</a></li>
+              <li><a href="#">Pengaturan</a></li>
+              <li><a href="#">Logout</a></li>
+          </ul>
+      </nav>
+  </nav>
+  <main>
+      <div class="dashboard-content">
+        <div class="jumbotron" >
+          <h1 class="display-4">Hello {{user.first_name}} !</h1>
+          <p class="lead">As you are Admin, you can add a book to library, view available book in library,
+             Issue books to students,
+            View issued book to students and many more ... !
+      
+          </p>
+        
+          <ul class="dashboard-item">
+              <li>
+                  <a href="#">
+                      <span>Tambahkan Anggota</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="addbook">
+                      <span>Tambahkan Buku</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </main>
     <hr class="my-4">
     <p>Option Available For You</p>
     <div class="options" style="text-align:center">
@@ -52,8 +167,8 @@
       <a href="viewissuedbook" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">lihat daftar peminjaman</a><br><br>
       <a href="viewstudent" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">lihat anggota</a>
     </div>
+  </div>
 
-    </div>
 
 
     {% include "library/footer.html" %}

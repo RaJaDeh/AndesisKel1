@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Group
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.core.mail import send_mail
@@ -254,7 +254,7 @@ def booking_view(request):
 
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from datetime import date, timedelta
 from .models import Book, StudentExtra, BookLoan, Notification
 
@@ -268,20 +268,23 @@ def borrow_book(request, book_id):
     student = get_object_or_404(StudentExtra, user=request.user)
 
     if request.method == 'GET':
-        # Mendapatkan tanggal jatuh tempo pengembalian (7 hari setelah tanggal peminjaman)
+        # Check if there are existing loans for the book with status other than 'dikembalikan'
+        existing_loan = BookLoan.objects.filter(book=book, student=student, status__in=['menunggu konfirmasi peminjaman', 'dipinjam']).first()
+
+        if existing_loan:
+            return render(request, 'library/popup.html')
+
+        # Proceed with the borrowing process
         due_date = date.today() + timedelta(days=7)
-        
-        # Membuat objek peminjaman buku dengan status 'menunggu konfirmasi peminjaman'
         book_loan = BookLoan(student=student, book=book, date_due=due_date, status='menunggu konfirmasi peminjaman')
         book_loan.save()
 
-        # Mengurangi jumlah buku yang tersedia
         book.jumlah_buku -= 1
         book.save()
 
         return HttpResponseRedirect('/')
 
-    return render(request, 'library/borrow_book.html', {'book': book})
+    return render(request, '/', {'book': book})
 
 @login_required
 def daftar_peminjaman(request):
@@ -320,6 +323,9 @@ def accept_peminjaman(request, peminjaman_id):
         elif status == 'ditolak':
             peminjaman.status = 'ditolak'
             peminjaman.save()
+            book = peminjaman.book
+            book.jumlah_buku += 1
+            book.save()
             return redirect('viewiss')
     return render(request, 'library/viewissuedbook.html', {'peminjaman': peminjaman})
 
@@ -330,7 +336,10 @@ def view_pengembalian_admin(request):
         peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
         peminjaman.status = 'dikembalikan'
         peminjaman.save()
-        return redirect('pengembalian')
+        book = peminjaman.book
+        book.jumlah_buku += 1
+        book.save()
+        return redirect('viewiss')
     
     peminjaman_list3 = BookLoan.objects.all()
     return render(request, 'library/pengembalian_admin.html', {'peminjaman_list3': peminjaman_list3})

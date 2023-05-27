@@ -143,6 +143,10 @@
     .containerbuku tbody tr:hover {
         background-color: #008a61;
     }
+    .button-container .filter-button.active {
+        background-color: #008a61;
+        color: white;
+    }
     
 
     </style>
@@ -163,7 +167,7 @@
             </div>
             <h2 class="atas">Rincian :  </h2>
             <div class="containerbuku">
-                <table class="table table-hover table-condensed" style="width: 90%;">
+                <table id ="peminjaman-table" class="table table-hover table-condensed" style="width: 90%;">
                     <thead>
                     <tr>
                         <th></th>
@@ -179,8 +183,18 @@
                     </tfoot>
                     <tbody>
                     {%for peminjaman in peminjaman_list%}
-                    <!-- {%if peminjaman.status != "dikembalikan"%}   -->
-                    <tr>
+                    {% if peminjaman.status == "menunggu konfirmasi peminjaman" %}
+                    <tr data-status="menunggu">
+                    {% elif peminjaman.status == "dipinjam" %}
+                    <tr data-status="dipinjam">
+                    {% elif peminjaman.status == "dikembalikan" %}
+                    <tr data-status="dikembalikan">
+                    {% elif peminjaman.status == "ditolak" or peminjaman.status == "Canceled" %}
+                    <tr data-status="batal">
+                    {% else %}
+                    <tr data-status="all">
+                    {% endif %}
+                            
                         <td style="vertical-align: top;">
                         <img src="coverhujan.jpg" alt="cover" class="cover"/>
                         </td>
@@ -209,7 +223,7 @@
                         </div>
                         </div>
                         </td>
-                        <td> {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status %}
+                        <td> {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status != "dikembalikan" and peminjaman.status != "ditolak"%}
                             <br>
                             <form action="{% url 'peminjaman_list' %}" method="POST">
                               {% csrf_token %}
@@ -219,10 +233,8 @@
                           {% endif %}
                         </td>
                         
-                    </tr>
                     
                     </tfoot>
-                        <!-- {%endif%} -->
                         {%endfor%}
                         
 
@@ -230,5 +242,34 @@
                 </table>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+          $(document).ready(function() {
+            // Mengambil elemen tombol filter
+            var filterButtons = $('.filter-button');
+        
+            // Menambahkan event click pada tombol filter
+            filterButtons.click(function() {
+              // Menghapus kelas active dari semua tombol filter
+              filterButtons.removeClass('active');
+        
+              // Menambahkan kelas active pada tombol yang diklik
+              $(this).addClass('active');
+        
+              // Mendapatkan mode yang dipilih dari atribut data-mode
+              var mode = $(this).data('mode');
+        
+              // Menyembunyikan semua baris tabel
+              $('#peminjaman-table tbody tr').hide();
+        
+              // Menampilkan baris tabel berdasarkan mode yang dipilih
+              if (mode === 'all') {
+                $('#peminjaman-table tbody tr').show();
+              } else {
+                $('#peminjaman-table tbody tr[data-status="' + mode + '"]').show();
+              }
+            });
+          });
+        </script>
     </body>
     </html>
