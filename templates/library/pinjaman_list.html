@@ -1,10 +1,10 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Peminjaman</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman</title>
     <style>
 
     body {
@@ -233,6 +233,40 @@
                           {% endif %}
                         </td>
                         
+                        {% if peminjaman.status == 'dipinjam' %}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tiketModal{{ peminjaman.id }}">Tiket</button> <!-- Tombol tiket -->
+                    {% endif %}
+                </td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td colspan="3">
+                        <div class="modal fade" id="tiketModal{{ peminjaman.id }}" tabindex="-1" role="dialog" aria-labelledby="tiketModalLabel{{ peminjaman.id }}" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="tiketModalLabel{{ peminjaman.id }}">Tiket Peminjaman Buku</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Identitas Siswa:</strong> {{ peminjaman.student }}</p>
+                                        <p><strong>Keterangan Buku:</strong> {{ peminjaman.book.name }}</p>
+                                        <p><strong>Tanggal Peminjaman:</strong> {{ peminjaman.date_issued }}</p>
+                                        <p><strong>Tanggal Jatuh Tempo:</strong> {{ peminjaman.date_due }}</p>
+                                        <p><strong>Catatan:</strong> Perlihatkan tiket ini ke pustakawan saat Anda berada di perpustakaan.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        {% endfor %}
                     
                     </tfoot>
                         {%endfor%}

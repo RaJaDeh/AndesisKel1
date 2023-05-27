@@ -79,6 +79,53 @@
 
 
 </style>
+<style media="screen">
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+  }
+
+  .jumbotron {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .jumbotron h1 {
+    text-align: center;
+  }
+
+  .my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+  .my-table-row.zero-books {
+    background-color: #CCC;
+  }
+
+  .my-table-row:hover {
+    background-color: #2DC194;
+  }
+
+  .fit-to-button {
+    width: 1%;
+    white-space: nowrap;
+  }
+</style>
   </head>
   <body>
     {% include "library/navbarstudent.html" %}
@@ -117,7 +164,7 @@
     </tfoot>
     <tbody>
       {% for book in books %}
-  <tr class="my-table-row">
+  <tr class="my-table-row {% if book.jumlah_buku == 0 %}zero-books{% endif %}">
     <td>FOTO</td>
     <td>
       <ul class="list-unstyled">
@@ -153,6 +200,7 @@
     </td>
   </tr>
 {% endfor %}
+
 
     </tbody>
   </table>
