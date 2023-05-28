@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
     <style type="text/css">
     	body{
     		color: #aa082e;
-    		background-color: #b6bde7 !important;
+    		background-color: white !important;
     		font-family: 'Roboto', sans-serif;
     	}
         .form-control {
@@ -85,14 +90,131 @@
     	.signup-form form a:hover {
     		text-decoration: underline;
     	}
+		*{
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mulish';
+}
+
+.sidebar{
+    background: rgba(114, 250, 202, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 210px;
+    height: 100%;
+    transition: all 0.5s ease;
+}
+.logo{
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: 45px;
+}
+img{
+    display: block;
+    width: 139px;
+    height: 116.6px;
+    margin: 0 auto;
+}
+ul li a{
+    display: block;
+    padding: 13px 30px;
+    border-bottom: 0px solid rgba(114, 250, 202, 0.5);
+    color: #000;
+    font-size: 20px;
+    font-weight: medium;
+    left: 30px;
+    top: 15px;
+    font-family: 'Mulish';
+    position: relative;
+}
+main{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 20px;
+}
+.dashboard-content{
+    margin-top: 10px;
+    margin-left: 250px;
+}
+h2{
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+.dashboard-item ul li a{
+    display: block;
+    color: #000;
+    font-size: 20px;
+    font-family: 'Mulish';
+    position: relative;
+}
+.dashboard-item img{
+    height: 40px;
+    width: 40px;
+    margin-left: -40px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.dashboard-item span{
+    font-weight: 500;
+    margin-left: 20px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.jumbotron{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #5cd3b4;
+}
+.jumbotron h1{
+  text-align: center;
+}
     </style>
 
 
   </head>
+  {%load static%}
   <body style="background-color:#b6bde7;">
-    {% include "library/navbaradmin.html" %}
+	<nav class="sidebar">
+		<header>
+			<div class="logo">
+				<img src="{% static "images/logoPL.png" %}" alt="Logo">
+			</div>
+		</header>
+		<nav>
+			<ul>
+				<li><a href="/" class="active">Dashboard</a></li>
+				<li><a href="viewstudent">Anggota</a></li>
+				<li><a href="viewbook">Buku</a></li>
+				<li><a href="logout">Logout</a></li>
+			</ul>
+		</nav>
+	</nav>
     <br>
    <br>
+   <div class="dashboard-content">
+	<div class="jumbotron" >
     <div class="signup-form">
         <form  method="post" class="form-horizontal">
 
@@ -118,6 +240,8 @@
         </form>
     	<div class="text-center">View Available Book In Library<a href="viewbook">Click here</a></div>
     </div>
+	</div>
+   </div>
 
 
 

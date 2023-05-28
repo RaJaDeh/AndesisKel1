@@ -3,95 +3,294 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <style media="screen">
-    table.redTable {
-border: 2px solid #A40808;
-background-color: #EEE7DB;
-width: 100%;
-text-align: center;
-border-collapse: collapse;
-}
-table.redTable td, table.redTable th {
-border: 1px solid #AAAAAA;
-padding: 3px 2px;
-}
-table.redTable tbody td {
-font-size: 13px;
-}
-table.redTable tr:nth-child(even) {
-background: #F5C8BF;
-}
-table.redTable thead {
-background: #A40808;
-}
-table.redTable thead th {
-font-size: 19px;
-font-weight: bold;
-color: #FFFFFF;
-text-align: center;
-border-left: 2px solid #A40808;
-}
-table.redTable thead th:first-child {
-border-left: none;
+      *{
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mulish';
 }
 
-table.redTable tfoot {
-font-size: 13px;
-font-weight: bold;
-color: #FFFFFF;
-background: #A40808;
+body{
+    background: #fff;
 }
-table.redTable tfoot td {
-font-size: 13px;
+
+.sidebar{
+    background: rgba(114, 250, 202, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 210px;
+    height: 100%;
+    transition: all 0.5s ease;
 }
-table.redTable tfoot .links {
-text-align: right;
+.logo{
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: 45px;
 }
-table.redTable tfoot .links a{
-display: inline-block;
-background: #FFFFFF;
-color: #A40808;
-padding: 2px 8px;
-border-radius: 5px;
+img{
+    display: block;
+    width: 139px;
+    height: 116.6px;
+    margin: 0 auto;
 }
+ul li a{
+    display: block;
+    padding: 13px 30px;
+    border-bottom: 0px solid rgba(114, 250, 202, 0.5);
+    color: #000;
+    font-size: 20px;
+    font-weight: medium;
+    left: 30px;
+    top: 15px;
+    font-family: 'Mulish';
+    position: relative;
+}
+main{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding: 20px;
+}
+.dashboard-content{
+    margin-top: 10px;
+    margin-left: 250px;
+}
+h2{
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+.dashboard-item ul li a{
+    display: block;
+    color: #000;
+    font-size: 20px;
+    font-family: 'Mulish';
+    position: relative;
+}
+.dashboard-item img{
+    height: 40px;
+    width: 40px;
+    margin-left: -40px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.dashboard-item span{
+    font-weight: 500;
+    margin-left: 20px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.jumbotron{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.jumbotron h1{
+  text-align: center;
+}
+
+
+    .container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.jumbotron{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.jumbotron h1{
+  text-align: center;
+}
+.my-table-row {
+    background-color: #95ffda;
+    transition: background-color 0.3s ease;
+  }
+
+
+.my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
+}
+.container .containertable {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .containertable tbody {
+        padding-bottom: 20px;
+    }
+
+
+</style>
+<style media="screen">
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+  }
+
+  .jumbotron {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .jumbotron h1 {
+    text-align: center;
+  }
+
+  .my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+  .my-table-row.zero-books {
+    background-color: #CCC;
+  }
+
+  .my-table-row:hover {
+    background-color: #2DC194;
+  }
+
+  .fit-to-button {
+    width: 1%;
+    white-space: nowrap;
+  }
+</style>
     </style>
   </head>
   <body>
-    {% include "library/navbaradmin.html" %}
+    {%load static%}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Registered Students</h3>
-
+    <nav class="sidebar">
+      <header>
+          <div class="logo">
+              <img src="{% static "images/logoPL.png" %}" alt="Logo">
+          </div>
+      </header>
+      <nav>
+          <ul>
+              <li><a href="/" class="active">Dashboard</a></li>
+              <li><a href="viewstudent">Anggota</a></li>
+              <li><a href="viewbook">Buku</a></li>
+              <li><a href="logout">Logout</a></li>
+          </ul>
+      </nav>
+  </nav>
     {% if students%}
-<div class="container">
-  <table class="table table-hover table-condensed table-striped table-bordered">
-    <thead>
-    <tr>
-    <th>Name</th>
-    <th>Enrollment</th>
-    <th>Branch</th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-    <td colspan="3">
-    <div class="links"></div>
-    </td>
-    </tr>
-    </tfoot>
-    <tbody>
-      {% for s in students %}
-        <tr>
+    <div class="dashboard-content">
+    <div class="container">
+      <h2 class="atas">Data Student</h2>
+      <div class="containertable">
+      <table class="table table-co">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Enrollment</th>
+            <th>Branch</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="3" rowspan="3">
+              <div class="links"></div>
+            </td>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for s in students %}
+        <tr class="my-table-row">
           <td>{{s.get_name}}</td>
           <td>{{s.enrollment}}</td>
           <td>{{s.branch}}</td>
     
         </tr>
-    
-      {% endfor %}
+        {%endfor%}
+
     </tbody>
     </table>
+</div>
 </div>
 {%else%}
 <h1> No Student Registered in Library</h1>
