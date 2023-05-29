@@ -69,6 +69,7 @@ urlpatterns = [
 
     path('accept-peminjaman/<int:peminjaman_id>/', views.accept_peminjaman, name='accept_peminjaman'),
     # path('customadmin/login/', custom_admin_login, name='custom_admin_login'),
+    path('tiket', views.lihat_tiket, name='tiket')
 ]
 
 if settings.DEBUG:

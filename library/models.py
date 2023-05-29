@@ -18,7 +18,8 @@ class StudentExtra(models.Model):
     def getuserid(self):
         return self.user.id
 
-
+import cv2
+from PIL import Image
 class Book(models.Model):
     catchoice = [
         ('education', 'Education'),
@@ -45,8 +46,17 @@ class Book(models.Model):
     category = models.CharField(max_length=30, choices=catchoice, default='education')
     jumlah_buku = models.PositiveIntegerField(default=0)
     lokasi_buku = models.CharField(max_length=30, choices=catchoice2, default='RAK A')
-    cover = models.ImageField(upload_to='book_covers/', default='static/images/AdminIcon.jpg')
+    cover = models.ImageField(upload_to='book_covers/', default='book_covers/AdminIcon.jpg')
+    
+    def save(self, *args, **kwargs):
+        # Memanggil metode save model yang asli
+        super().save(*args, **kwargs)
 
+        # Mengubah ukuran gambar setelah objek Book disimpan
+        if self.cover:
+            img = Image.open(self.cover.path)
+            img = img.resize((150, 200))
+            img.save(self.cover.path)
 
     def __str__(self):
         return str(self.name) + "[" + str(self.isbn) + "]"

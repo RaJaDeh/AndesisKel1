@@ -345,6 +345,8 @@ def view_pengembalian_admin(request):
     peminjaman_list3 = BookLoan.objects.all()
     return render(request, 'library/pengembalian_admin.html', {'peminjaman_list3': peminjaman_list3})
 
+def lihat_tiket(request):
+    return render(request, 'library/tiket.html')
 
 # from django.contrib.auth import authenticate, login
 # from django.shortcuts import render, redirect
