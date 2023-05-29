@@ -190,7 +190,7 @@
                     {% endif %}
                             
                         <td style="vertical-align: top;">
-                        <img src="coverhujan.jpg" alt="cover" class="cover"/>
+                            <img src="{{ peminjaman.book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
                         </td>
                         <td>   
                         <div class="details">
@@ -217,7 +217,8 @@
                         </div>
                         </div>
                         </td>
-                        <td> {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status != "dikembalikan" and peminjaman.status != "ditolak"%}
+                        <td> 
+                            {% if peminjaman.status != 'Canceled' and peminjaman.status != "dipinjam" and peminjaman.status != "dikembalikan" and peminjaman.status != "ditolak"%}
                             <br>
                             <form action="{% url 'peminjaman_list' %}" method="POST">
                               {% csrf_token %}

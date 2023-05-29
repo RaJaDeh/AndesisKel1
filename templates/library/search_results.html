@@ -80,10 +80,14 @@
 </style>
   </head>
   <body>
-    {% include "library/navbar.html" %}
+    {% if user.is_authenticated %}
+        {% include "library/navbarstudent.html" %}
+    {% else %}
+        {% include "library/navbar.html" %}
+    {% endif %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Search Results</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Hasil Pencarian</h3>
     <div class="d-flex justify-content-center">
         <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
@@ -113,7 +117,11 @@
     <tbody>
       {% for book in results %}
   <tr class="my-table-row">
-    <td>FOTO</td>
+    <td>{% if book.cover %}
+      <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+    {% else %}
+      <p>Tidak ada gambar cover</p>
+    {% endif %}</td></td>
     <td>
       <ul class="list-unstyled">
         <li>

@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.core.mail import send_mail
 from librarymanagement.settings import EMAIL_HOST_USER
+from django.db import IntegrityError
 
 
 def home_view(request):
@@ -86,16 +87,18 @@ def afterlogin_view(request):
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def addbook_view(request):
-    #now it is empty book form for sending to html
-    form=forms.BookForm()
-    if request.method=='POST':
-        #now this form have data from html
-        form=forms.BookForm(request.POST, request.FILES)
+    form = forms.BookForm()
+    if request.method == 'POST':
+        form = forms.BookForm(request.POST, request.FILES)
         if form.is_valid():
-            book = form.save()
-            book.save()
-            return render(request,'library/bookadded.html')
-    return render(request,'library/addbook.html',{'form':form})
+            try:
+                book = form.save()
+                book.save()
+                return render(request, 'library/bookadded.html')
+            except IntegrityError:
+                form.add_error('isbn', 'ISBN must be unique.')
+    return render(request, 'library/addbook.html', {'form': form})
+
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -115,12 +118,15 @@ def studentview_view(request):
 @user_passes_test(is_admin)
 def update_book_view(request, book_id):
     book = get_object_or_404(models.Book, isbn=book_id)
-    form = forms.BookForm(request.POST or None, instance=book)
+    form = forms.BookForm(request.POST or None, request.FILES or None, instance=book)
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
-            return redirect('view_book')
+            try:
+                form.save()
+                return render(request, 'library/bookadded.html')
+            except IntegrityError:
+                form.add_error('isbn', 'ISBN must be unique.')
 
     return render(request, 'library/update_book.html', {'form': form})
 

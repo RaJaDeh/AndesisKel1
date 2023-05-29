@@ -166,7 +166,13 @@
     <tbody>
       {% for book in books %}
   <tr class="my-table-row {% if book.jumlah_buku == 0 %}zero-books{% endif %}">
-    <td>FOTO</td>
+    <td class="fit-to-button">
+      {% if book.cover %}
+      <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+    {% else %}
+      <p>Tidak ada gambar cover</p>
+    {% endif %}</td>
+    <td>
     <td>
       <ul class="list-unstyled">
         <li>
