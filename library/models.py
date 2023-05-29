@@ -45,6 +45,8 @@ class Book(models.Model):
     category = models.CharField(max_length=30, choices=catchoice, default='education')
     jumlah_buku = models.PositiveIntegerField(default=0)
     lokasi_buku = models.CharField(max_length=30, choices=catchoice2, default='RAK A')
+    cover = models.ImageField(upload_to='book_covers/', default='static/images/AdminIcon.jpg')
+
 
     def __str__(self):
         return str(self.name) + "[" + str(self.isbn) + "]"

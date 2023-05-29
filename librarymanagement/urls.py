@@ -20,6 +20,8 @@ from django.urls import path
 from library import views
 from django.contrib.auth.views import LoginView,LogoutView
 from library.admin import admin_site
+from django.conf import settings
+from django.conf.urls.static import static
 # from library.views import custom_admin_login
 
 urlpatterns = [
@@ -68,3 +70,7 @@ urlpatterns = [
     path('accept-peminjaman/<int:peminjaman_id>/', views.accept_peminjaman, name='accept_peminjaman'),
     # path('customadmin/login/', custom_admin_login, name='custom_admin_login'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

@@ -90,9 +90,10 @@ def addbook_view(request):
     form=forms.BookForm()
     if request.method=='POST':
         #now this form have data from html
-        form=forms.BookForm(request.POST)
+        form=forms.BookForm(request.POST, request.FILES)
         if form.is_valid():
-            user=form.save()
+            book = form.save()
+            book.save()
             return render(request,'library/bookadded.html')
     return render(request,'library/addbook.html',{'form':form})
 

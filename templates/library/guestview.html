@@ -75,6 +75,8 @@ border-radius: 5px;
   </head>
   <body>
     {% include "library/navbar.html" %}
+    {% load static %}
+
     <br>
     <br>
     <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Available Book in Library</h3>
@@ -106,7 +108,12 @@ border-radius: 5px;
     <tbody>
       {% for book in books %}
       <tr class ='my-table-row'>
-        <td>FOTO</td>
+        <td class="fit-to-button">
+          {% if book.cover %}
+          <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+        {% else %}
+          <p>Tidak ada gambar cover</p>
+        {% endif %}</td>
         <td>
           <ul class="list-unstyled">
             <li>
