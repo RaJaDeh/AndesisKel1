@@ -267,8 +267,8 @@ h2{
         <thead>
           <tr>
             <th>Name</th>
-            <th>Enrollment</th>
-            <th>Branch</th>
+            <th>Universitas</th>
+            <th>Daerah</th>
           </tr>
         </thead>
         <tfoot>
@@ -282,8 +282,8 @@ h2{
           {% for s in students %}
         <tr class="my-table-row">
           <td>{{s.get_name}}</td>
-          <td>{{s.enrollment}}</td>
-          <td>{{s.branch}}</td>
+          <td>{{s.Asal_Universitas}}</td>
+          <td>{{s.Asal_Daerah}}</td>
     
         </tr>
         {%endfor%}

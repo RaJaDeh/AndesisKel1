@@ -26,7 +26,7 @@ class StudentUserForm(forms.ModelForm):
 class StudentExtraForm(forms.ModelForm):
     class Meta:
         model=models.StudentExtra
-        fields=['enrollment','branch']
+        fields=['Asal_Universitas','Asal_Daerah']
 
 class BookForm(forms.ModelForm):
     cover = forms.ImageField(label='Cover Image')

@@ -105,7 +105,7 @@
     <br>
     <br>
 	
-<center><h3 style=" margin-bottom: 0px;"class = 'alert alert-success'>Login As Student!</h3></center>
+<center><h3 style=" margin-bottom: 0px;"class = 'alert alert-success'>Login Page</h3></center>
 <br>
     <div class="signup-form">
         <form  method="post" class="form-horizontal">
@@ -114,6 +114,7 @@
 
 {% csrf_token %}
 			{% for field in form %}
+			{% csrf_token %}
 			<div class="form-group text-center">
 				<label class="control-label col-xs-4" style="color: #333;">{{ field.label_tag }}</label>
 				<div class="col-xs-8">
