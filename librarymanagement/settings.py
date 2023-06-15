@@ -26,7 +26,17 @@ SECRET_KEY = 'k(6-_4sgig$sbrccr2*0=7s)bklpiywi#_121l)s(f8)dq^^wv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['42f2-103-121-16-17.ngrok-free.app']
+
+CSRF_TRUSTED_ORIGINS = ['https://42f2-103-121-16-17.ngrok-free.app']
+
+CORS_ALLOWED_ORIGINS = [
+    'https://42f2-103-121-16-17.ngrok-free.app'
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'https://42f2-103-121-16-17.ngrok-free.app'
+]
 
 # Application definition
 
