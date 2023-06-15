@@ -3,11 +3,12 @@ from django.http import HttpResponseRedirect
 from . import forms,models
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import Group
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.core.mail import send_mail
 from librarymanagement.settings import EMAIL_HOST_USER
+from django.db import IntegrityError
 
 
 def home_view(request):
@@ -37,7 +38,6 @@ def adminsignup_view(request):
             user=form.save()
             user.set_password(user.password)
             user.save()
-
 
             my_admin_group = Group.objects.get_or_create(name='ADMIN')
             my_admin_group[0].user_set.add(user)
@@ -87,15 +87,18 @@ def afterlogin_view(request):
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
 def addbook_view(request):
-    #now it is empty book form for sending to html
-    form=forms.BookForm()
-    if request.method=='POST':
-        #now this form have data from html
-        form=forms.BookForm(request.POST)
+    form = forms.BookForm()
+    if request.method == 'POST':
+        form = forms.BookForm(request.POST, request.FILES)
         if form.is_valid():
-            user=form.save()
-            return render(request,'library/bookadded.html')
-    return render(request,'library/addbook.html',{'form':form})
+            try:
+                book = form.save()
+                book.save()
+                return render(request, 'library/bookadded.html')
+            except IntegrityError:
+                form.add_error('isbn', 'ISBN must be unique.')
+    return render(request, 'library/addbook.html', {'form': form})
+
 
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
@@ -106,6 +109,37 @@ def viewbook_view(request):
 def guestview_view(request):
     books=models.Book.objects.all()
     return render(request,'library/guestview.html',{'books':books})
+
+def studentview_view(request):
+    books=models.Book.objects.all()
+    return render(request,'library/guestview.html',{'books':books})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def update_book_view(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+    form = forms.BookForm(request.POST or None, request.FILES or None, instance=book)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            try:
+                form.save()
+                return render(request, 'library/bookadded.html')
+            except IntegrityError:
+                form.add_error('isbn', 'ISBN must be unique.')
+
+    return render(request, 'library/update_book.html', {'form': form})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_book_view(request, book_id):
+    book = get_object_or_404(models.Book, isbn=book_id)
+
+    if request.method == 'POST':
+        book.delete()
+        return redirect('view_book')
+
+    return render(request, 'library/delete_book.html', {'book': book})
 
 
 
@@ -142,7 +176,7 @@ def viewissuedbook_view(request):
         if d>15:
             day=d-15
             fine=day*10
-
+    
 
         books=list(models.Book.objects.filter(isbn=ib.isbn))
         students=list(models.StudentExtra.objects.filter(enrollment=ib.enrollment))
@@ -219,5 +253,114 @@ def search_results(request):
     return render(request, 'library/search_results.html', context)
 
 
-def view_peminjaman(request):
-    return render(request,'library/pengajuan_peminjaman.html')
+def booking_view(request):
+    return render(request, 'library/bookingbuku.html')
+
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
+from datetime import date, timedelta
+from .models import Book, StudentExtra, BookLoan, Notification
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from datetime import date, timedelta
+from .models import Book, StudentExtra, BookLoan
+
+def borrow_book(request, book_id):
+    book = get_object_or_404(Book, isbn=book_id)
+    student = get_object_or_404(StudentExtra, user=request.user)
+
+    if request.method == 'GET':
+        # Check if there are existing loans for the book with status other than 'dikembalikan'
+        existing_loan = BookLoan.objects.filter(book=book, student=student, status__in=['menunggu konfirmasi peminjaman', 'dipinjam']).first()
+
+        if existing_loan:
+            return render(request, 'library/popup.html')
+
+        # Proceed with the borrowing process
+        due_date = date.today() + timedelta(days=7)
+        book_loan = BookLoan(student=student, book=book, date_due=due_date, status='menunggu konfirmasi peminjaman')
+        book_loan.save()
+
+        book.jumlah_buku -= 1
+        book.save()
+
+        return HttpResponseRedirect('/')
+
+    return render(request, '/', {'book': book})
+
+@login_required
+def daftar_peminjaman(request):
+    if request.method == 'POST':
+        peminjaman_id = request.POST.get('peminjaman_id')
+        peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+        peminjaman.status = 'Canceled'
+        peminjaman.save()
+        book = peminjaman.book
+        book.jumlah_buku += 1
+        book.save()
+        return redirect('peminjaman_list')
+    
+    student_extra = StudentExtra.objects.get(user=request.user)
+    peminjaman_list = BookLoan.objects.filter(student=student_extra).order_by('status')
+    return render(request, 'library/pinjaman_list.html', {'peminjaman_list': peminjaman_list})
+
+@login_required
+def riwayat_peminjaman(request):
+    student_extra = StudentExtra.objects.get(user=request.user)
+    peminjaman_list = BookLoan.objects.filter(student=student_extra)
+    return render(request, 'library/riwayat_peminjaman.html', {'peminjaman_list': peminjaman_list})
+
+def view_peminjaman_admin(request):
+    peminjaman_list2 = BookLoan.objects.all()
+    return render(request, 'library/viewissuedbook.html', {'peminjaman_list2': peminjaman_list2})
+
+def accept_peminjaman(request, peminjaman_id):
+    peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        if status == 'dipinjam':
+            peminjaman.status = 'dipinjam'
+            peminjaman.save()
+            return redirect('viewiss')
+        elif status == 'ditolak':
+            peminjaman.status = 'ditolak'
+            peminjaman.save()
+            book = peminjaman.book
+            book.jumlah_buku += 1
+            book.save()
+            return redirect('viewiss')
+    return render(request, 'library/viewissuedbook.html', {'peminjaman': peminjaman})
+
+def view_pengembalian_admin(request):
+
+    if request.method == 'POST':
+        peminjaman_id = request.POST.get('peminjaman_id')
+        peminjaman = get_object_or_404(BookLoan, id=peminjaman_id)
+        peminjaman.status = 'dikembalikan'
+        peminjaman.save()
+        book = peminjaman.book
+        book.jumlah_buku += 1
+        book.save()
+        return redirect('viewiss')
+    
+    peminjaman_list3 = BookLoan.objects.all()
+    return render(request, 'library/pengembalian_admin.html', {'peminjaman_list3': peminjaman_list3})
+
+
+# from django.contrib.auth import authenticate, login
+# from django.shortcuts import render, redirect
+
+# def custom_admin_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None and user.is_staff:
+#             login(request, user)
+#             return redirect('admin:index')
+#         else:
+#             error_message = 'Invalid username or password.'
+#             return render(request, 'customadmin/login.html', {'error_message': error_message})
+#     return render(request, 'customadmin/login.html')

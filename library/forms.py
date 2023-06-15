@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from . import models
+from multiupload.fields import MultiFileField
 
 class ContactusForm(forms.Form):
     Name = forms.CharField(max_length=30)
@@ -25,12 +26,15 @@ class StudentUserForm(forms.ModelForm):
 class StudentExtraForm(forms.ModelForm):
     class Meta:
         model=models.StudentExtra
-        fields=['enrollment','branch']
+        fields=['Asal_Universitas','Asal_Daerah']
 
 class BookForm(forms.ModelForm):
+    cover = forms.ImageField(label='Cover Image')
+
     class Meta:
-        model=models.Book
-        fields=['name','isbn','author','category','jumlah_buku','lokasi_buku']
+        model = models.Book
+        fields = ['name', 'isbn', 'author', 'category', 'jumlah_buku', 'lokasi_buku', 'cover']
+
 class IssuedBookForm(forms.Form):
     #to_field_name value will be stored when form is submitted.....__str__ method of book model will be shown there in html
     isbn2=forms.ModelChoiceField(queryset=models.Book.objects.all(),empty_label="Name and isbn", to_field_name="isbn",label='Name and Isbn')

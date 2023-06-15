@@ -75,9 +75,11 @@ border-radius: 5px;
   </head>
   <body>
     {% include "library/navbar.html" %}
+    {% load static %}
+
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Available Book in Library</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Katalog Buku yang Tersedia di Perpustakaan</h3>
     <div class="d-flex justify-content-center">
         <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search by title" aria-label="Search">
@@ -106,7 +108,12 @@ border-radius: 5px;
     <tbody>
       {% for book in books %}
       <tr class ='my-table-row'>
-        <td>FOTO</td>
+        <td class="fit-to-button">
+          {% if book.cover %}
+          <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+        {% else %}
+          <p>Tidak ada gambar cover</p>
+        {% endif %}</td>
         <td>
           <ul class="list-unstyled">
             <li>
@@ -118,6 +125,7 @@ border-radius: 5px;
             <li><strong>Kategori:</strong> {{ book.category }}</li>
             <li><strong>Jumlah Buku:</strong> {{ book.jumlah_buku }}</li>
             <li><strong>Lokasi Rak:</strong> {{ book.lokasi_buku }}</li>
+        
           </ul>
         </td>
         <td class="fit-to-button">

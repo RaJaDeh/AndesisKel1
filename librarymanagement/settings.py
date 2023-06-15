@@ -26,8 +26,17 @@ SECRET_KEY = 'k(6-_4sgig$sbrccr2*0=7s)bklpiywi#_121l)s(f8)dq^^wv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['42f2-103-121-16-17.ngrok-free.app']
 
+CSRF_TRUSTED_ORIGINS = ['https://42f2-103-121-16-17.ngrok-free.app']
+
+CORS_ALLOWED_ORIGINS = [
+    'https://42f2-103-121-16-17.ngrok-free.app'
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'https://42f2-103-121-16-17.ngrok-free.app'
+]
 
 # Application definition
 
@@ -39,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'library',
+    'multiupload',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'librarymanagement.urls'
@@ -133,3 +144,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sumitproject1503@gmail.com'
 EMAIL_HOST_PASSWORD = 'sumityoyo'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

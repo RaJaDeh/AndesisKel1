@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 10000;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content button {
+    padding: 10px 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="popup-overlay"></div>
+    <div class="popup-container">
+        <div class="popup-content">
+            <h2>Buku Tidak Dapat Dipinjam</h2>
+            <p>Buku ini tidak tersedia untuk dipinjam saat ini.</p>
+            <button onclick="closePopup()">Tutup</button>
+        </div>
+    </div>
+<script>
+
+function openPopup() {
+    document.querySelector('.popup-overlay').style.display = 'block';
+    document.querySelector('.popup-container').style.display = 'block';
+}
+
+function closePopup() {
+    document.querySelector('.popup-overlay').style.display = 'none';
+    document.querySelector('.popup-container').style.display = 'none';
+    window.location.href = '/';
+}
+</script>
+</body>
+</html>

@@ -4,63 +4,90 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style media="screen">
-table.redTable {
-border: 2px solid #607d8b;
-background-color: #EEE7DB;
-width: 100%;
-text-align: center;
-border-collapse: collapse;
-}
-table.redTable td, table.redTable th {
-border: 1px solid #AAAAAA;
-padding: 3px 2px;
-}
-table.redTable tbody td {
-font-size: 13px;
-}
-table.redTable tr:nth-child(even) {
-background: #ffffff;
-}
-table.redTable thead {
-background: #607d8b;
-}
-table.redTable thead th {
-font-size: 19px;
-font-weight: bold;
-color: #FFFFFF;
-text-align: center;
-border-left: 2px solid #607d8b;
-}
-table.redTable thead th:first-child {
-border-left: none;
+.container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
 }
 
-table.redTable tfoot {
-font-size: 13px;
-font-weight: bold;
-color: #FFFFFF;
-background: #607d8b;
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
 }
-table.redTable tfoot td {
-font-size: 13px;
+
+.jumbotron{
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-table.redTable tfoot .links {
-text-align: right;
+.jumbotron h1{
+  text-align: center;
 }
-table.redTable tfoot .links a{
-display: inline-block;
-background: #FFFFFF;
-color: #607d8b;
-padding: 2px 8px;
-border-radius: 5px;
+.my-table-row {
+    background-color: #95ffda;
+    transition: background-color 0.3s ease;
+  }
+
+
+.my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
 }
+.container .containertable {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .containertable tbody {
+        padding-bottom: 20px;
+    }
+
 </style>
   </head>
   <body>
-    {% include "library/navbar.html" %}
+    {% if user.is_authenticated %}
+        {% include "library/navbarstudent.html" %}
+    {% else %}
+        {% include "library/navbar.html" %}
+    {% endif %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Search Results</h3>
+    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Hasil Pencarian</h3>
     <div class="d-flex justify-content-center">
         <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
@@ -72,49 +99,87 @@ border-radius: 5px;
 {% block content %}
   {% if results %}
 <div class="container">
-  {% for book in results %}
-  <table class="table table-hover table-condensed table-striped table-bordered">
+  <div class="containertable">
+  <table class="table table-co">
     <thead>
-    <tr>
-      <th>Nama buku</th>
-      <th>ISBN</th>
-      <th>Penerbit</th>
-      <th>Kategori</th>
-      <th>jumlah_buku</th>
-      <th>lokasi_buku</th>
-    </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
     </thead>
     <tfoot>
-    <tr>
-    <td colspan="4" rowspan="4">
-    <div class="links"></div>
-    </td>
-    </tr>
+      <tr>
+        <td colspan="3" rowspan="3">
+          <div class="links"></div>
+        </td>
+      </tr>
     </tfoot>
     <tbody>
-      
-      <td>{{ book.name }}</td>
-      <td>{{book.isbn}}</td>
-      <td>{{book.author}}</td>
-      <td>{{book.category}}</td>  <!-- Adjust this based on the fields you want to display -->
-      <td>{{book.jumlah_buku}}</td>
-      <td>{{book.lokasi_buku}}</td>  <!-- Adjust this based on the fields you want to display -->
-      
-        {% endfor %}
+      {% for book in results %}
+  <tr class="my-table-row">
+    <td>{% if book.cover %}
+      <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+    {% else %}
+      <p>Tidak ada gambar cover</p>
+    {% endif %}</td></td>
+    <td>
+      <ul class="list-unstyled">
+        <li>
+          <a href="{% url 'book_details' book.isbn %}" style="color: black"><strong>{{ book.name }}</strong></a>
+        </li>
+        <br>
+        <li><strong>ISBN</strong></li>
+        <li><strong>Penulis</strong></li>
+        <li><strong>Kategori</strong></li>
+        <li><strong>Jumlah Buku</strong></li>
+        <li><strong>Lokasi Rak</strong></li>  
+      </ul>
+      <td>
+        <ul class="list-unstyled">
+        
+        <br><br>
+        <li><strong>: {{ book.isbn }}</strong></li>
+        <li><strong>: {{ book.author }}</strong></li>
+        <li><strong>: {{ book.category }}</strong></li>
+        <li><strong>: {{ book.jumlah_buku }}</strong></li>
+        <li><strong>: {{ book.lokasi_buku }}</strong></li> 
+      </ul>
+      </td>
+    </td>
     
-  {% else %}
-    <p>No results found.</p>
-  {% endif %}
+    <td class="fit-to-button">
+      {% if user.is_authenticated %}
+      {% if book.jumlah_buku > 0 %}
+        <a id="borrow-btn" href="{% url 'borrow_book' book.isbn %}" onclick="return confirm('Apakah Anda yakin ingin meminjam buku {{ book.name }}? ISBN: {{ book.isbn }} - Kategori: {{ book.category }}')" class="btn btn-success btn-content">Pinjam</a>
+      {% else %}
+        <button class="btn btn-danger btn-content" disabled>Habis</button>
+        {% endif %}
+      {% endif %}
+      <a href="{% url 'book_details' book.isbn %}" class="btn btn-primary btn-content">Details</a>
+    </td>
+  </tr>
+  
+{% endfor %}
+
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+  function confirmBorrow(name, isbn, category) {
+    if (confirm("Apakah Anda yakin ingin meminjam buku " + name + "? ISBN: " + isbn + " - Kategori: " + category)) {
+      alert("Berhasil meminjam");
+      return true;
+    } else {
+      return false;
+    }
+  }
+  </script>
+
+{%else%}
+<h1>Have 0 book</h1>
+{%endif%}
 {% endblock %}
-<!--       
-      {% for book in books %}
-        <tr>
-          <td>{{book.name}}</td>
-          <td>{{book.isbn}}</td>
-          <td>{{book.author}}</td>
-          <td>{{book.category}}</td>
-        </tr>
-      {% endfor %} -->
     </tbody>
     </table>
 </div>

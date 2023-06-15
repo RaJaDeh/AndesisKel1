@@ -2,6 +2,19 @@
 <html lang="en" dir="ltr">
   <head>
 <style media="screen">
+  .container {
+        width: 1200px;
+        margin: 0 auto;
+        max-height: fit-content;
+        background: #72FACA;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+    }
 .btn-circle.btn-xl {
   width: 70px;
   height: 70px;
@@ -28,17 +41,95 @@
 .jumbotron h1{
   text-align: center;
 }
+.my-table-row {
+    background-color: #95ffda;
+    transition: background-color 0.3s ease;
+  }
 
 
+.my-table-row:hover {
+    background-color: #2DC194;
+    
+  }
+.fit-to-button {
+  width: 1%;
+  white-space: nowrap;
+}
+.container .containertable {
+        width: 100%;
+        margin-top: 15px;
+        background: #95ffda;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        max-height: fit-content;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .containertable tbody {
+        padding-bottom: 20px;
+    }
+
+
+</style>
+<style media="screen">
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+  }
+
+  .btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+  }
+
+  .jumbotron {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  .jumbotron h1 {
+    text-align: center;
+  }
+
+  .my-table-row {
+    background-color: #72FACA;
+    transition: background-color 0.3s ease;
+  }
+
+  .my-table-row.zero-books {
+    background-color: #CCC;
+  }
+
+  .my-table-row:hover {
+    background-color: #2DC194;
+  }
+
+  .fit-to-button {
+    width: 1%;
+    white-space: nowrap;
+  }
 </style>
   </head>
   <body>
     {% include "library/navbarstudent.html" %}
     <br>
     <br>
-    <center><h3 style=" margin-bottom: 0px;" class='alert alert-success'>Selamat datang di PerpusLink</h3></center>
-    <div class="jumbotron"   style="    margin-bottom: 0px;">
-    <h1 class="display-4">Hallo {{user.first_name}} !</h1>
+    <center><h3 style=" margin-bottom: 0px;" class='alert alert-success'>Cari buku di PerpusLink</h3></center>
     <p class="lead">
     </p>
     <hr class="my-4">
@@ -49,8 +140,100 @@
     </div>
 
     </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <form method="GET" action="{% url 'search_results' %}" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search by title" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <br>
+    
+{% if books%}
+<div class="container">
+  <h2 class="atas">Katalog Buku</h2>
+  <div class="containertable">
+  <table class="table table-co">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td colspan="3" rowspan="3">
+          <div class="links"></div>
+        </td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for book in books %}
+  <tr class="my-table-row {% if book.jumlah_buku == 0 %}zero-books{% endif %}">
+    <td class="fit-to-button">
+      {% if book.cover %}
+      <img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;">
+    {% else %}
+      <p>Tidak ada gambar cover</p>
+    {% endif %}</td>
+    <td>
+    <td>
+      <ul class="list-unstyled">
+        <li>
+          <a href="{% url 'book_details' book.isbn %}" style="color: black"><strong>{{ book.name }}</strong></a>
+        </li>
+        <br>
+        <li><strong>ISBN</strong></li>
+        <li><strong>Penulis</strong></li>
+        <li><strong>Kategori</strong></li>
+        <li><strong>Jumlah Buku</strong></li>
+        <li><strong>Lokasi Rak</strong></li>  
+      </ul>
+      <td>
+        <ul class="list-unstyled">
+        
+        <br><br>
+        <li><strong>: {{ book.isbn }}</strong></li>
+        <li><strong>: {{ book.author }}</strong></li>
+        <li><strong>: {{ book.category }}</strong></li>
+        <li><strong>: {{ book.jumlah_buku }}</strong></li>
+        <li><strong>: {{ book.lokasi_buku }}</strong></li> 
+      </ul>
+      </td>
+    </td>
+    <td class="fit-to-button">
+      {% if book.jumlah_buku > 0 %}
+        <a id="borrow-btn" href="{% url 'borrow_book' book.isbn %}" onclick="return confirm('Apakah Anda yakin ingin meminjam buku {{ book.name }}? ISBN: {{ book.isbn }} - Kategori: {{ book.category }}')" class="btn btn-success btn-content">Pinjam</a>
+      {% else %}
+        <button class="btn btn-danger btn-content" disabled>Habis</button>
+      {% endif %}
+      <a href="{% url 'book_details' book.isbn %}" class="btn btn-primary btn-content">Details</a>
+    </td>
+  </tr>
+{% endfor %}
+
+
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+  function confirmBorrow(name, isbn, category) {
+    if (confirm("Apakah Anda yakin ingin meminjam buku " + name + "? ISBN: " + isbn + " - Kategori: " + category)) {
+      alert("Berhasil meminjam");
+      return true;
+    } else {
+      return false;
+    }
+  }
+  </script>
+
+{%else%}
+<h1>Have 0 book</h1>
+{%endif%}
 
 
     {% include "library/footer.html" %}
   </body>
 </html>
+

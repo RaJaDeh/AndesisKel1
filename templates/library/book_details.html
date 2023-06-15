@@ -59,7 +59,11 @@ border-radius: 5px;
 </style>
   </head>
   <body>
-    {% include "library/navbar.html" %}
+    {% if user.is_authenticated %}
+        {% include "library/navbarstudent.html" %}
+    {% else %}
+        {% include "library/navbar.html" %}
+    {% endif %}
     <br>
     <br>
     <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Detail Buku</h3>
@@ -72,17 +76,40 @@ border-radius: 5px;
         </div>
           <div class="card">
               <div class="card-body">
+                <h5 class="card-title text-center"><img src="{{ book.cover.url }}" alt="Cover Buku" style="max-width: 150px; max-height: 200px;"></h5>
                   <h5 class="card-title text-center"><strong>{{ book.name }}</strong></h5>
                   <p class="card-text">Author: {{ book.author }}</p>
                   <p class="card-text">ISBN: {{ book.isbn }}</p>
                   <p class="card-text">Kategori: {{ book.category }}</p>
                   <p class="card-text">Jumlah Buku: {{ book.jumlah_buku }}</p>
                   <p class="card-text">Lokasi: {{ book.lokasi_buku }}</p>
-                  <!-- Add more book details here -->
+                  {% if user.is_authenticated %}
+                  <p class="card-text">
+                    {% if book.jumlah_buku > 0 %}
+                      <a id="borrow-btn" href="{% url 'borrow_book' book.isbn %}" onclick="return confirm('Apakah Anda yakin ingin meminjam buku {{ book.name }}? ISBN: {{ book.isbn }} - Kategori: {{ book.category }}')" class="btn btn-success btn-content">Pinjam</a>
+                    {% else %}
+                      <button class="btn btn-danger btn-content" disabled>Habis</button>
+                    {% endif %}
+
+
+                  </p>
+                  {% endif %}
+                  
               </div>
           </div>
-      </div>
+      </div>  
+    </tr>
       {% endblock %}
+      <script>
+        function confirmBorrow(name, isbn, category) {
+          if (confirm("Apakah Anda yakin ingin meminjam buku " + name + "? ISBN: " + isbn + " - Kategori: " + category)) {
+            alert("Berhasil meminjam");
+            return true;
+          } else {
+            return false;
+          }
+        }
+        </script>
 
 
 <br><br><br><br><br><br><br><br><br>

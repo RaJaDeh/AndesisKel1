@@ -23,7 +23,7 @@
     		box-shadow: none !important;
     	}
         .form-control:focus {
-    		border-color: #5cd3b4;
+    		border-color: #72FACA;
     	}
         .form-control, .btn {
             border-radius: 3px;
@@ -32,21 +32,23 @@
     		width: 500px;
     		margin: 0 auto;
     		padding: 30px 0;
+			background-color: #72FACA;
     	}
         .signup-form h2 {
     		color: #333;
-            margin: 0 0 30px 0;
+            margin: 0 0 0 0;
     		display: inline-block;
-    		padding: 0 30px 10px 0;
-    	    border-bottom: 3px solid #ffffff;
+    		padding: 0 0 10px 0;
+			text-align: center;
         }
         .signup-form form {
     		color: #999;
     		border-radius: 3px;
         	margin-bottom: 15px;
             background: #fff;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0);
             padding: 30px;
+			background-color: #72FACA;
         }
     	.signup-form .form-group {
     		margin-bottom: 20px;
@@ -84,6 +86,12 @@
     	.signup-form form a:hover {
     		text-decoration: underline;
     	}
+		.custom-input {
+        width: 80%;
+		border-radius: 5px;
+        background-color: white;
+        padding: 10px;
+    }
     </style>
 
 
@@ -96,25 +104,28 @@
     {% include "library/navbar.html" %}
     <br>
     <br>
-<center><h3 style=" margin-bottom: 0px;"class = 'alert alert-success'>Login As Student!</h3></center>
+	
+<center><h3 style=" margin-bottom: 0px;"class = 'alert alert-success'>Login Page</h3></center>
+<br>
     <div class="signup-form">
         <form  method="post" class="form-horizontal">
 
-    			<center><h2>Student Login</h2></center>
+    			<center><h2>Login</h2></center>
 
 {% csrf_token %}
-            {% for field in form %}
-            <div class="form-group text-center">
-              <label class="control-label col-xs-4">{{ field.label_tag }}</label>
-              <div class="col-xs-8">
-              {{ field }}
-               </div>
-            </div>
-            {% endfor %}
+			{% for field in form %}
+			{% csrf_token %}
+			<div class="form-group text-center">
+				<label class="control-label col-xs-4" style="color: #333;">{{ field.label_tag }}</label>
+				<div class="col-xs-8">
+					<input type="{{ field.field.widget.input_type }}" class="custom-input" name="{{ field.html_name }}" id="{{ field.auto_id }}" {% if field.field.required %}required{% endif %}>
+				</div>
+			</div>
+			{% endfor %}
 
     		<div class="form-group text-center">
     			<div class="col-xs-8 col-xs-offset-4">
-            <button type="submit" class="btn btn-success btn-lg" style="border-radius: 0%;">Login</button>
+            <button type="submit" class="btn btn-success btn-lg" style="border-radius: 5px;">Login</button>
     			</div>
     		</div>
         </form>
